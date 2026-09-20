@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Heal From Home | Food • Herbs • Farming • Enterprise</title>
+  <meta name="description" content="Heal From Home is a 12-week programme equipping individuals and families with practical knowledge of nutrition, herbal wellness, organic food cultivation and agribusiness.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forest: '#062B00',
+            forest2: '#0B4300',
+            sun: '#FFF43D',
+            lime: '#C7FF36',
+            cream: '#FFFCE8',
+            ink: '#10140D'
+          },
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif']
+          },
+          boxShadow: {
+            soft: '0 20px 60px rgba(6,43,0,.14)'
+          }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+  html{scroll-behavior:smooth}
+  body{font-family:Inter,ui-sans-serif,system-ui,sans-serif}
+  .grain{background-image:radial-gradient(rgba(255,255,255,.08) 1px,transparent 1px);background-size:14px 14px}
+  .hero-glow{box-shadow:0 0 0 1px rgba(255,244,61,.18),0 30px 90px rgba(0,0,0,.28)}
+  .schedule-row:last-child{border-bottom:0}
+  .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease,transform .7s ease}
+  .reveal.show{opacity:1;transform:none}
+
+  .grass-blade{
+    position:absolute;
+    bottom:-3px;
+    width:4px;
+    height:42px;
+    transform-origin:bottom center;
+    border-radius:100% 0 100% 0;
+    background:linear-gradient(to top,#0B4300,#8FCE28);
+    opacity:.8;
+    animation:grass-sway 4s ease-in-out infinite;
+  }
+
+  .grass-blade:nth-child(2){height:32px;width:3px;animation-duration:4.8s;animation-delay:-1.2s}
+  .grass-blade:nth-child(3){height:50px;width:4px;animation-duration:3.7s;animation-delay:-2s}
+  .grass-blade:nth-child(4){height:27px;width:3px;animation-duration:5.2s;animation-delay:-.8s}
+  .grass-blade:nth-child(5){height:38px;width:3px;animation-duration:4.3s;animation-delay:-2.8s}
+  .grass-blade:nth-child(6){height:55px;width:4px;animation-duration:5.7s;animation-delay:-1.5s}
+  .grass-blade:nth-child(7){height:34px;width:3px;animation-duration:4.1s;animation-delay:-3s}
+  .grass-blade:nth-child(8){height:46px;width:4px;animation-duration:5s;animation-delay:-2.2s}
+  .grass-blade:nth-child(9){height:29px;width:3px;animation-duration:4.5s;animation-delay:-1s}
+  .grass-blade:nth-child(10){height:40px;width:4px;animation-duration:5.5s;animation-delay:-3.2s}
+  .grass-blade:nth-child(11){height:25px;width:3px;animation-duration:3.9s;animation-delay:-1.7s}
+  .grass-blade:nth-child(12){height:48px;width:4px;animation-duration:5.1s;animation-delay:-2.5s}
+  .grass-blade:nth-child(13){height:31px;width:3px;animation-duration:4.4s;animation-delay:-.5s}
+  .grass-blade:nth-child(14){height:43px;width:4px;animation-duration:5.8s;animation-delay:-3.5s}
+  .grass-blade:nth-child(15){height:28px;width:3px;animation-duration:4.2s;animation-delay:-2.1s}
+
+  @keyframes grass-sway{
+    0%,100%{transform:rotate(-6deg)}
+    50%{transform:rotate(7deg)}
+  }
+
+  @media(max-width:640px){
+    .grass-blade{height:32px}
+    .grass-blade:nth-child(3){height:38px}
+    .grass-blade:nth-child(6){height:42px}
+    .grass-blade:nth-child(8){height:35px}
+    .grass-blade:nth-child(12){height:37px}
+  }
+</style>
+
+</head>
+<body class="bg-cream text-ink antialiased">
+
+
+<!-- Fixed decorative grass -->
+<div class="pointer-events-none fixed inset-x-0 bottom-0 z-40 h-14 overflow-hidden sm:h-16" aria-hidden="true">
+
+  <!-- Left cluster -->
+  <div class="grass-blade" style="left:3%"></div>
+  <div class="grass-blade" style="left:3.2%"></div>
+  <div class="grass-blade" style="left:3.5%"></div>
+  <div class="grass-blade" style="left:.4%"></div>
+
+  <!-- Small middle-left cluster -->
+  <div class="grass-blade" style="left:24%"></div>
+  <div class="grass-blade" style="left:24.5%"></div>
+  <div class="grass-blade" style="left:25%"></div>
+
+  <!-- Centre cluster -->
+
+  <!-- Right cluster -->
+  <div class="grass-blade" style="left:80%"></div>
+  <div class="grass-blade" style="left:82.5%"></div>
+  <div class="grass-blade" style="left:83%"></div>
+  <div class="grass-blade" style="left:83.5%"></div>
+
+
+</div>
+
+
+
+<header class="fixed inset-x-0 top-0 z-50">
+  <div class="mx-auto max-w-7xl px-4 pt-4 sm:px-6 lg:px-8">
+    <nav class="flex items-center justify-between rounded-2xl border border-white/10 bg-forest/95 px-4 py-3 text-white shadow-lg backdrop-blur md:px-6">
+      <a href="#home" class="flex items-center gap-3">
+        <div class="grid h-10 w-10 place-items-center rounded-xl bg-sun text-forest font-black">H</div>
+        <div class="leading-none"><div class="font-black tracking-tight">HEAL</div><div class="text-[10px] font-bold tracking-[.28em] text-sun">FROM HOME</div></div>
+      </a>
+      <div class="hidden items-center gap-7 text-md font-medium md:flex">
+        <a class="transition hover:text-sun" href="#about">About</a>
+        <a class="transition hover:text-sun" href="#programme">Programme</a>
+        <a class="transition hover:text-sun" href="#team">Facilitators</a>
+        <a class="transition hover:text-sun" href="#schedule">Schedule</a>
+      </div>
+      <a href="#programme" class="hidden rounded-xl bg-sun px-4 py-2.5 text-sm font-extrabold text-forest transition hover:-translate-y-0.5 md:block">Explore programme</a>
+      <button id="menuBtn" class="grid h-10 w-10 place-items-center rounded-xl border border-white/15 md:hidden" aria-label="Open menu">
+        <span class="text-xl">☰</span>
+      </button>
+    </nav>
+    <div id="mobileMenu" class="mt-2 hidden rounded-2xl bg-forest p-4 text-white shadow-xl md:hidden">
+      <div class="grid gap-1 text-md font-medium">
+        <a class="rounded-xl px-4 py-3 hover:bg-white/10" href="#about">About</a>
+        <a class="rounded-xl px-4 py-3 hover:bg-white/10" href="#programme">Programme</a>
+        <a class="rounded-xl px-4 py-3 hover:bg-white/10" href="#team">Facilitators</a>
+        <a class="rounded-xl px-4 py-3 hover:bg-white/10" href="#schedule">Schedule</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="home" class="relative overflow-visible bg-forest pt-32 text-white">
+
+  <!-- Background -->
+  <div class="grain absolute inset-0 opacity-50"></div>
+  <div class="absolute -left-32 top-32 h-72 w-72 rounded-full bg-lime/10 blur-3xl"></div>
+
+  <!-- Main hero content -->
+  <div class="relative z-10 mx-auto grid max-w-7xl items-center gap-8 px-4 pb-20 sm:px-6 lg:grid-cols-[1fr_1fr] lg:px-8 lg:pb-24">
+
+    <!-- Left content -->
+    <div class="relative z-20 reveal">
+
+      <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-sun/30 bg-sun/10 px-4 py-2 text-sm font-bold text-sun">
+        <span class="h-2 w-2 rounded-full bg-lime"></span>
+        12-WEEK PRACTICAL PROGRAMME
+      </div>
+
+      <h1 class="max-w-3xl text-5xl font-black leading-[.98] tracking-[-.05em] sm:text-6xl lg:text-7xl">
+        Grow what nourishes you.<br>
+        <span class="text-sun">Heal from home.</span>
+      </h1>
+
+      <p class="mt-7 max-w-2xl text-lg leading-8 text-white/75">
+        Heal from Home aims to empower individuals and families with practical knowledge of herbal healing and organic food cultivation.
+      </p>
+
+      <!-- Programme information -->
+      <div class="mt-9 rounded-2xl border border-white/10 bg-forest/90 p-5 backdrop-blur">
+        <div class="flex items-end justify-between gap-4">
+          <div>
+            <div class="text-sm font-bold text-sun">LIVE VIA ZOOM</div>
+            <div class="mt-1 text-lg font-extrabold">
+              Thursdays 7:00 PM · Saturdays 10:00 AM
+            </div>
+            <div class="mt-1 text-sm text-white/60">
+              WAT · 20 Aug - 5 Nov 2026
+            </div>
+          </div>
+
+          <div class="hidden h-12 w-12 shrink-0 place-items-center rounded-full bg-lime text-forest sm:grid">
+            ↗
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- Right logo area -->
+    <div class="relative min-h-[540px] reveal lg:min-h-[650px]">
+
+      <!-- Soft glow behind logo -->
+      <div class="absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-sun/10 blur-3xl"></div>
+
+      <!-- Logo -->
+      <div class="absolute inset-0 flex items-center justify-center">
+        <img src="assets/hero.png" alt="Heal From Home" class="relative z-10 w-[105%] max-w-[680px] object-contain">
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- Plant -->
+  <!-- This sits outside the grid so it can overlap the logo and extend below the hero -->
+  <img src="assets/plant.png" alt="" aria-hidden="true"
+    class="pointer-events-none absolute bottom-[0px] right-[0px] z-30 w-[300px] drop-shadow-[0_25px_35px_rgba(0,0,0,.35)] sm:right-[0px] sm:w-[500px] lg:bottom-[0] lg:right-[0px] lg:w-[450px]"
+  >
+
+</section>
+
+  <section class="border-y border-forest/10 bg-sun">
+    <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-5 text-center sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8 lg:text-left">
+      <p class="font-extrabold text-forest">From food and herbs to farming and enterprise.</p>
+      <p class="text-sm font-semibold text-forest/70">Practical knowledge designed for home, family and community.</p>
+    </div>
+  </section>
+
+  <section id="about" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+    <div class="grid gap-14 lg:grid-cols-[.8fr_1.2fr] lg:items-center">
+      <div class="reveal">
+        <div class="text-sm font-black uppercase tracking-[.22em] text-forest2">Why Heal From Home</div>
+        <h2 class="mt-3 text-4xl font-black tracking-tight text-forest sm:text-5xl">Health starts with what we can practise every day.</h2>
+      </div>
+      <div class="reveal">
+        <p class="text-lg leading-8 text-forest/75">Heal From Home aims to empower individuals and families with practical knowledge of herbal healing and organic food cultivation. The programme combines healthy living, natural approaches, small-space cultivation and entrepreneurship into one structured learning pathway.</p>
+        <div class="mt-8 grid gap-4 sm:grid-cols-2">
+          <div class="rounded-2xl bg-white p-6 shadow-soft"><div class="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-lime text-xl">01</div><h3 class="font-extrabold text-forest">Healthy living</h3><p class="mt-2 text-md leading-6 text-forest/65">Learn healthy living and natural approaches through food and herbs.</p></div>
+          <div class="rounded-2xl bg-white p-6 shadow-soft"><div class="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-sun text-xl">02</div><h3 class="font-extrabold text-forest">Grow at home</h3><p class="mt-2 text-md leading-6 text-forest/65">Develop skills to grow organic foods and medicinal herbs in small or limited spaces.</p></div>
+          <div class="rounded-2xl bg-white p-6 shadow-soft"><div class="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-sun text-xl">03</div><h3 class="font-extrabold text-forest">Create income</h3><p class="mt-2 text-md leading-6 text-forest/65">Explore ways to monetise farming knowledge and products.</p></div>
+          <div class="rounded-2xl bg-white p-6 shadow-soft"><div class="mb-4 grid h-11 w-11 place-items-center rounded-xl bg-lime text-xl">04</div><h3 class="font-extrabold text-forest">Build sustainably</h3><p class="mt-2 text-md leading-6 text-forest/65">Follow a structured pathway from learning and practical work to online training.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="programme" class="bg-forest py-20 text-white lg:py-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="max-w-3xl reveal"><div class="text-sm font-black uppercase tracking-[.22em] text-sun">The learning journey</div><h2 class="mt-3 text-4xl font-black tracking-tight sm:text-5xl">Three modules. One practical pathway.</h2><p class="mt-5 text-lg leading-8 text-white/65">The programme moves from nutrition and natural wellness into cultivation, then into the business skills needed to turn agricultural knowledge into products and opportunities.</p></div>
+      <div class="mt-12 grid gap-5 lg:grid-cols-3">
+        <article class="reveal rounded-[1.75rem] border border-white/10 bg-white/5 p-7">
+          <div class="flex items-center justify-between"><span class="rounded-full bg-sun px-3 py-1 text-xs font-black text-forest">MODULE 01</span><span class="text-3xl">🥬</span></div>
+          <h3 class="mt-8 text-2xl font-black">Nutrition</h3>
+          <p class="mt-3 leading-7 text-white/65">Nutritional foundations, nature's medicine cabinet and family wellness through nutrition.</p>
+          <div class="mt-8 border-t border-white/10 pt-5 text-sm font-semibold text-sun">FACILITATOR · OLUWAKEMI TAIWO</div>
+        </article>
+        <article class="reveal rounded-[1.75rem] border border-white/10 bg-white/5 p-7">
+          <div class="flex items-center justify-between"><span class="rounded-full bg-lime px-3 py-1 text-xs font-black text-forest">MODULE 02</span><span class="text-3xl">🌱</span></div>
+          <h3 class="mt-8 text-2xl font-black">Farming</h3>
+          <p class="mt-3 leading-7 text-white/65">Organic agriculture, medicinal plants, herbal gardening, soil health, planting, feeding and pest management.</p>
+          <div class="mt-8 border-t border-white/10 pt-5 text-sm font-semibold text-lime">FACILITATOR · AFUHBOM DANIEL</div>
+        </article>
+        <article class="reveal rounded-[1.75rem] border border-white/10 bg-white/5 p-7">
+          <div class="flex items-center justify-between"><span class="rounded-full bg-sun px-3 py-1 text-xs font-black text-forest">MODULE 03</span><span class="text-3xl">📦</span></div>
+          <h3 class="mt-8 text-2xl font-black">Agri Business</h3>
+          <p class="mt-3 leading-7 text-white/65">Cultivation, sustainable production, harvesting, processing, packaging, marketing and entrepreneurship.</p>
+          <div class="mt-8 border-t border-white/10 pt-5 text-sm font-semibold text-sun">FACILITATOR · ADEYINKA ADETUNJI</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="team" class="mx-auto max-w-7xl px-4 py-20 sm:px-6 lg:px-8 lg:py-28">
+    
+    <div class="max-w-3xl reveal"><div class="text-sm font-black uppercase tracking-[.22em] text-forest2">Meet the people</div><h2 class="mt-3 text-4xl font-black tracking-tight text-forest sm:text-5xl">A multidisciplinary team behind the programme.</h2></div>
+    
+    <div class="mt-12 grid gap-6 md:grid-cols-2">
+      <article class="reveal overflow-hidden rounded-[1.75rem] bg-forest text-white shadow-soft">
+        <div class="grid sm:grid-cols-[.7fr_1.3fr]">
+          <img src="assets/pastor_darasimi.jpg" alt="Pastor Darasimi Gomba Oyor" class="h-full min-h-[280px] w-full object-cover">
+          <div class="p-7">
+            <div class="text-xs font-black uppercase tracking-[.2em] text-sun">General Overseer</div>
+            <h3 class="mt-2 text-2xl font-black">Pastor Darasimi Gomba Oyor</h3>
+            <p class="mt-4 text-md leading-7 text-white/70">A Christian counsellor, author, minister and advocate for personal transformation, wholesome living and Kingdom-centred development. She is the founder of The Garden, a counselling and mentorship platform, and Ezer Intensive Academy.</p>
+            <p class="mt-4 text-md leading-7 text-white/70">She is a certified chaplain, a professional Christian counselor, and a member of the American Association of Christian Counselors. Darasimi is also an author and spoken-word minister.</p>
+          </div>
+        </div>
+      </article>
+      <article class="reveal overflow-hidden rounded-[1.75rem] bg-white shadow-soft">
+        <div class="grid sm:grid-cols-[.7fr_1.3fr]">
+          <img src="assets/nicole_joy.jpg" alt="Nicole Joy" class="h-full min-h-[280px] w-full object-cover">
+          <div class="p-7">
+            <div class="text-xs font-black uppercase tracking-[.2em] text-forest2">Programme Creator & Director</div>
+            <h3 class="mt-2 text-2xl font-black text-forest">Nicolle Joy <br></h3>
+            <p class="mt-4 text-md leading-7 text-forest/70">Inspired by her own experience of overcoming debilitating health challenges through prayer, nutrition and lifestyle changes, Nicole designed Heal From Home to help others take greater control of health and wellbeing.</p>
+            <p class="mt-4 text-md leading-7 text-forest/70">With over 10 years of experience as a successful businesswoman, she also brings entrepreneurship into the programme, helping families become healthier, more self-sufficient and economically empowered from home.</p>
+          </div>
+        </div>
+      </article>
+      <article class="reveal overflow-hidden rounded-[1.75rem] bg-sun shadow-soft">
+        <div class="grid sm:grid-cols-[.7fr_1.3fr]">
+          <img src="assets/daniel.jpg" alt="Afuhbom Daniel" class="h-full min-h-[280px] w-full object-cover">
+          <div class="p-7">
+            <div class="text-xs font-black uppercase tracking-[.2em] text-forest2">Facilitator · Agriculture</div>
+            <h3 class="mt-2 text-2xl font-black text-forest">Afuhbom Daniel</h3>
+            <p class="mt-4 text-md leading-7 text-forest/75">An agricultural expert, agro-engineer and founder of Danny's Garden of Knowledge, focused on practical agricultural knowledge, natural health systems and sustainable living.</p>
+            <p class="mt-4 text-md leading-7 text-forest/75">His interests include organic soil health, sustainable farming techniques and teaching young people practical approaches to agriculture.</p>
+          </div>
+        </div>
+      </article>
+      <article class="reveal overflow-hidden rounded-[1.75rem] bg-white shadow-soft">
+        <div class="grid sm:grid-cols-[.7fr_1.3fr]">
+          <img src="assets/adeyinka.jpg" alt="Adeyinka Adetunji" class="h-full min-h-[280px] w-full object-cover">
+          <div class="p-7">
+            <div class="text-xs font-black uppercase tracking-[.2em] text-forest2">Agri Business Expert · Facilitator</div>
+            <h3 class="mt-2 text-2xl font-black text-forest">Adeyinka Adetunji</h3>
+            <p class="mt-4 text-md leading-7 text-forest/70">An educator, agribusiness professional and curriculum developer with a passion for empowering learners through practical, engaging and transformative education.</p>
+            <p class="mt-4 text-md leading-7 text-forest/70">He is the founder of Best Scholars Edu Consult and is actively involved in ADFORA AGRIBUSINESS, with experience in agribusiness management, livestock production and sustainable agriculture.</p>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <div class="mt-6 grid gap-6 lg:grid-cols-2">
+      <article class="reveal overflow-hidden rounded-[1.75rem] bg-forest text-white shadow-soft">
+        <div class="grid sm:grid-cols-[.55fr_1.45fr]">
+          <img src="assets/kemifarm.jpg" alt="Oluwakemi Taiwo" class="h-full min-h-[230px] w-full object-cover">
+          <div class="p-7"><div class="text-xs font-black uppercase tracking-[.2em] text-sun">Facilitator · Nutrition</div><h3 class="mt-2 text-2xl font-black">Oluwakemi Taiwo</h3><p class="mt-4 text-md leading-7 text-white/70">A Public Health Nutritionist, Researcher and Health Data Analyst passionate about community-based initiatives and public health nutrition, with a strong interest in preventive healthcare and evidence-based interventions.</p></div>
+        </div>
+      </article>
+      <article class="reveal overflow-hidden rounded-[1.75rem] bg-lime shadow-soft">
+        <div class="flex min-h-[230px] items-center gap-7 p-7"><div class="grid h-20 w-20 shrink-0 place-items-center rounded-2xl bg-forest text-3xl text-sun">+</div><div><div class="text-xs font-black uppercase tracking-[.2em] text-forest2">Programme philosophy</div><h3 class="mt-2 text-2xl font-black text-forest">Learn it. Grow it. Use it.</h3><p class="mt-3 text-md leading-7 text-forest/70">The programme connects knowledge with practical cultivation and the economic possibilities of sustainable home agriculture.</p></div></div>
+      </article>
+    </div>
+  </section>
+
+  <section id="schedule" class="bg-white py-20 lg:py-28">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="flex flex-col justify-between gap-5 lg:flex-row lg:items-end">
+        <div class="reveal max-w-3xl"><div class="text-sm font-black uppercase tracking-[.22em] text-forest2">Programme schedule</div><h2 class="mt-3 text-4xl font-black tracking-tight text-forest sm:text-5xl">Every session, mapped out.</h2><p class="mt-5 text-lg leading-8 text-forest/65">Live classes take place on Thursdays at 7:00 PM and Saturdays at 10:00 AM (WAT).</p></div>
+        <div class="rounded-2xl bg-forest px-5 py-4 text-white"><div class="text-xs font-bold uppercase tracking-widest text-sun">Programme dates</div><div class="mt-1 font-extrabold">20 Aug – 5 Nov 2026</div></div>
+      </div>
+
+      <div class="mt-12 space-y-8">
+        <div class="reveal overflow-hidden rounded-[1.75rem] border border-forest/10 shadow-soft">
+          <div class="flex items-center justify-between bg-forest px-6 py-5 text-white"><div><div class="text-xs font-black uppercase tracking-[.2em] text-sun">Module 01</div><h3 class="mt-1 text-2xl font-black">Nutrition</h3></div><span class="text-2xl">🥬</span></div>
+          <div class="divide-y divide-forest/10">
+            <div class="schedule-row grid gap-3 p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>20th August</b><div class="text-sm italic text-forest/50">Thursday</div></div><div><b>Nutritional Foundations</b><div class="text-sm text-forest/55">Facilitator Oluwakemi Taiwo</div></div><span class="hidden rounded-full bg-sun px-3 py-1 text-xs font-bold sm:inline-block">SESSION</span></div>
+            <div class="schedule-row grid gap-3 bg-cream p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>22nd August</b><div class="text-sm italic text-forest/50">Saturday</div></div><div><b>Nature's Medicine Cabinet</b><div class="text-sm text-forest/55">Facilitator Oluwakemi Taiwo</div></div><span class="hidden rounded-full bg-lime px-3 py-1 text-xs font-bold sm:inline-block">SESSION</span></div>
+            <div class="schedule-row grid gap-3 p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>27th August</b><div class="text-sm italic text-forest/50">Thursday</div></div><div><b>Nature's Medicine Cabinet (Part 2) · Family Wellness Through Nutrition</b><div class="text-sm text-forest/55">Facilitator Oluwakemi Taiwo</div></div><span class="hidden rounded-full bg-sun px-3 py-1 text-xs font-bold sm:inline-block">SESSION</span></div>
+          </div>
+        </div>
+
+        <div class="reveal overflow-hidden rounded-[1.75rem] border border-forest/10 shadow-soft">
+          <div class="flex items-center justify-between bg-lime px-6 py-5 text-forest"><div><div class="text-xs font-black uppercase tracking-[.2em] text-forest/60">Module 02</div><h3 class="mt-1 text-2xl font-black">Farming</h3></div><span class="text-2xl">🌱</span></div>
+          <div class="divide-y divide-forest/10">
+            <div class="schedule-row grid gap-3 p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>29th August</b><div class="text-sm italic text-forest/50">Saturday</div></div><div><b>Introduction to Organic Agriculture in Small & Urban Spaces</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 bg-cream p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>3rd Sept.</b><div class="text-sm italic text-forest/50">Thursday</div></div><div><b>Introduction to Medicinal Plants and Herbal Gardening</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>5th Sept.</b><div class="text-sm italic text-forest/50">Saturday</div></div><div><b>Practical Session</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 bg-cream p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>10th Sept.</b><div class="text-sm italic text-forest/50">Thursday</div></div><div><b>Understanding Soil & Soil Health</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>12th Sept.</b><div class="text-sm italic text-forest/50">Saturday</div></div><div><b>Practical Session</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 bg-cream p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>17th Sept.</b><div class="text-sm italic text-forest/50">Thursday</div></div><div><b>Preparing Organic Soil for Herbal Gardening Seeds · Propagation and Nursery Management</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>19th Sept.</b><div class="text-sm italic text-forest/50">Saturday</div></div><div><b>Practical Session</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 bg-cream p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>24th Sept.</b><div class="text-sm italic text-forest/50">Thursday</div></div><div><b>Growing Herbs in Pots, Containers and Small Spaces</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>26th Sept.</b><div class="text-sm italic text-forest/50">Saturday</div></div><div><b>Practical Session</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 bg-cream p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>1st Oct.</b><div class="text-sm italic text-forest/50">Thursday</div></div><div><b>Garden Planning and Herb Selection · Planting · Watering and Feeding Herbs</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>3rd Oct.</b><div class="text-sm italic text-forest/50">Saturday</div></div><div><b>Practical Session</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 bg-cream p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>8th Oct.</b><div class="text-sm italic text-forest/50">Thursday</div></div><div><b>Organic Pest and Disease Management</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>10th Oct.</b><div class="text-sm italic text-forest/50">Saturday</div></div><div><b>Practical Session</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 bg-cream p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>15th Oct.</b><div class="text-sm italic text-forest/50">Thursday</div></div><div><b>Preparing Organic Soil for Herbal Gardening Seeds · Propagation and Nursery Management</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>17th Oct.</b><div class="text-sm italic text-forest/50">Saturday</div></div><div><b>Practical Session</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+          </div>
+        </div>
+
+        <div class="reveal overflow-hidden rounded-[1.75rem] border border-forest/10 shadow-soft">
+          <div class="flex items-center justify-between bg-sun px-6 py-5 text-forest"><div><div class="text-xs font-black uppercase tracking-[.2em] text-forest/60">Module 03</div><h3 class="mt-1 text-2xl font-black">Agri Business</h3></div><span class="text-2xl">📈</span></div>
+          <div class="divide-y divide-forest/10">
+            <div class="schedule-row grid gap-3 p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>22nd Oct.</b><div class="text-sm italic text-forest/50">Thursday</div></div><div><b>Foundations of Herbs & Spices: Cultivation and Sustainable Production</b><div class="text-sm text-forest/55">Facilitator Adeyinka Adetunji</div></div></div>
+            <div class="schedule-row grid gap-3 bg-cream p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>24th Oct.</b><div class="text-sm italic text-forest/50">Saturday</div></div><div><b>Practical Session</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>29th Oct.</b><div class="text-sm italic text-forest/50">Thursday</div></div><div><b>Harvesting, Processing, Value Addition & Packaging</b><div class="text-sm text-forest/55">Facilitator Adeyinka Adetunji</div></div></div>
+            <div class="schedule-row grid gap-3 bg-cream p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>31st Oct.</b><div class="text-sm italic text-forest/50">Saturday</div></div><div><b>Practical Session</b><div class="text-sm text-forest/55">Facilitator Afuhbom Daniel</div></div></div>
+            <div class="schedule-row grid gap-3 p-5 sm:grid-cols-[150px_1fr_auto] sm:items-center"><div><b>5th Nov.</b><div class="text-sm italic text-forest/50">Thursday</div></div><div><b>Entrepreneurship & Marketing: From Product to Profit</b><div class="text-sm text-forest/55">Facilitator Adeyinka Adetunji</div></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="relative overflow-hidden bg-sun py-20 lg:py-24">
+    <div class="absolute -right-20 -top-20 h-64 w-64 rounded-full bg-lime/50 blur-3xl"></div>
+    <div class="relative mx-auto grid max-w-7xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[1.1fr_.9fr] lg:px-8">
+      <div class="reveal"><div class="text-sm font-black uppercase tracking-[.22em] text-forest2">The bigger vision</div><h2 class="mt-3 text-4xl font-black tracking-tight text-forest sm:text-5xl">Healthier families. Practical skills. Sustainable possibilities.</h2><p class="mt-5 max-w-2xl text-lg leading-8 text-forest/70">Heal From Home brings together nutrition, cultivation and enterprise to help families learn skills they can practise and build on from home.</p></div>
+      <div class="reveal rounded-[2rem] bg-forest p-7 text-white shadow-soft"><div class="text-sm font-black uppercase tracking-[.2em] text-sun">At a glance</div><div class="mt-6 grid grid-cols-2 gap-3"><div class="rounded-2xl bg-white/5 p-5"><div class="text-3xl font-black">12</div><div class="mt-1 text-sm text-white/60">weeks</div></div><div class="rounded-2xl bg-white/5 p-5"><div class="text-3xl font-black">3</div><div class="mt-1 text-sm text-white/60">modules</div></div><div class="rounded-2xl bg-white/5 p-5"><div class="text-3xl font-black">2×</div><div class="mt-1 text-sm text-white/60">weekly sessions</div></div><div class="rounded-2xl bg-white/5 p-5"><div class="text-3xl font-black">100%</div><div class="mt-1 text-sm text-white/60">practical focus</div></div></div></div>
+    </div>
+  </section>
+
+  <section id="contact" class="bg-forest py-20 text-white lg:py-24">
+    <div class="mx-auto max-w-4xl px-4 text-center sm:px-6 lg:px-8">
+      <div class="reveal">
+        <div class="mx-auto grid h-14 w-14 place-items-center rounded-2xl bg-sun text-forest text-2xl font-black">H</div>
+        <h2 class="mt-7 text-4xl font-black tracking-tight sm:text-5xl">Ready to grow from home?</h2>
+        <p class="mx-auto mt-5 max-w-2xl text-lg leading-8 text-white/65">Explore the programme schedule and discover a practical pathway through nutrition, farming and agri business.</p>
+        <a href="#schedule" class="mt-8 inline-flex rounded-xl bg-sun px-6 py-3.5 font-extrabold text-forest transition hover:-translate-y-0.5">Explore the schedule</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="bg-[#031A00] py-8 text-white/50">
+  <div class="mx-auto flex max-w-7xl flex-col gap-3 px-4 text-sm sm:px-6 md:flex-row md:items-center md:justify-between lg:px-8">
+    <div><span class="font-black text-white">HEAL FROM HOME</span> · Food, herbs, farming & enterprise</div>
+    <div>© 2026 Heal From Home</div>
+  </div>
+</footer>
+
+<script>
+  const menuBtn=document.getElementById('menuBtn'),mobileMenu=document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click',()=>mobileMenu.classList.toggle('hidden'));
+  mobileMenu.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mobileMenu.classList.add('hidden')));
+  const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.08});
+  document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+</script>
+</body>
+</html>
