@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botanical Vine Background</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=Inter:wght@300;400&display=swap');
+
+        body {
+            /* Fallback deep green */
+            background-color: #0a1f16;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1, h2, h3, .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        /* Ensure smooth scrolling while keeping canvas fixed */
+        html, body {
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+    </style>
+</head>
+<body class="relative overflow-x-hidden antialiased">
+
+    <!-- The Interactive Canvas Background -->
+    <canvas id="vineCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none" style="z-index: -1;"></canvas>
+
+    <!-- Sample Website Content -->
+    <main class="relative z-10 flex flex-col items-center justify-center min-h-screen px-6 py-20 text-center pointer-events-auto">
+        <div class="max-w-2xl mx-auto space-y-8">
+            <p class="text-emerald-300/80 tracking-[0.2em] text-sm uppercase">Organic & Natural</p>
+            <h1 class="text-5xl md:text-7xl font-serif text-[#f4fcf6] leading-tight">
+                Modern Herbal <br> <span class="italic text-emerald-200/90">Remedies</span>
+            </h1>
+            <p class="text-lg md:text-xl text-[#c2d6cb] font-light max-w-lg mx-auto leading-relaxed">
+                Discover the healing power of nature with our carefully curated botanical blends, designed for mindful living.
+            </p>
+            <button class="mt-8 px-8 py-3 bg-emerald-800/40 border border-emerald-500/30 text-emerald-50 hover:bg-emerald-700/50 transition-all duration-300 backdrop-blur-sm rounded-full tracking-wide">
+                Explore Collection
+            </button>
+        </div>
+        
+        <!-- Spacer to demonstrate scrolling if needed -->
+        <div class="h-screen w-full mt-32 flex items-center justify-center border-t border-emerald-900/50">
+            <p class="text-emerald-400/60 font-serif italic text-2xl">Rooted in nature.</p>
+        </div>
+    </main>
+
+    <script>
+        /**
+         * ==========================================
+         * CONFIGURATION
+         * Easily adjust the look and feel here
+         * ==========================================
+         */
+        const CONFIG = {
+            // Vine density and size
+            desktopVineCount: 45,
+            mobileVineCount: 20,
+            segmentsMin: 12,       // Minimum number of points per vine
+            segmentsMax: 24,       // Maximum number of points per vine
+            
+            // Aesthetics
+            vineColor: '244, 252, 246', // RGB values for off-white/very light green
+            lineWidth: 1.2,        // Thickness of the stems
+            leafChance: 0.8,       // Probability (0 to 1) of a segment having a leaf
+            leafSizeMin: 4,
+            leafSizeMax: 9,
+
+            // Animation & Movement
+            swaySpeed: 0.0007,     // How fast the breeze blows
+            swayAmount: 0.015,     // How far the vines bend in the breeze
+            
+            // Mouse Interaction
+            mouseRadius: 180,      // Distance the mouse affects the vines
+            mouseForce: 0.08,      // How strongly the vines bend away from the mouse
+            bendSmoothing: 0.08    // How smoothly they return to normal (lower = smoother/slower)
+        };
+
+        /**
+         * ==========================================
+         * VINE SYSTEM IMPLEMENTATION
+         * ==========================================
+         */
+        const canvas = document.getElementById('vineCanvas');
+        const ctx = canvas.getContext('2d');
+
+        let vines = [];
+        let mouse = { x: -1000, y: -1000 };
+        let time = 0;
+
+        // Track mouse movement
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.clientX;
+            mouse.y = e.clientY;
+        });
+
+        // Reset mouse when it leaves the window
+        window.addEventListener('mouseleave', () => {
+            mouse.x = -1000;
+            mouse.y = -1000;
+        });
+
+        class Vine {
+            constructor(x, y, baseAngle, maxReach) {
+                this.x = x;
+                this.y = y;
+                this.baseAngle = baseAngle;
+                
+                // Opacity for depth effect (some vines are fainter)
+                this.opacity = 0.2 + Math.random() * 0.45;
+                
+                const numSegments = Math.floor(Math.random() * (CONFIG.segmentsMax - CONFIG.segmentsMin) + CONFIG.segmentsMin);
+                this.segmentLength = maxReach / numSegments;
+                this.segments = [];
+
+                // Determine an intrinsic curve direction for this specific vine so it looks organic
+                const overallCurve = (Math.random() - 0.5) * 0.15; 
+                
+                // Generate segments
+                for (let i = 0; i < numSegments; i++) {
+                    // Slight variation in curve per segment
+                    let relAngle = (i === 0) ? baseAngle : overallCurve + (Math.random() - 0.5) * 0.08;
+                    
+                    this.segments.push({
+                        relAngle: relAngle,
+                        swayPhase: Math.random() * Math.PI * 2,
+                        swaySpeedMult: 0.8 + Math.random() * 0.4,
+                        bend: 0,
+                        targetBend: 0,
+                        x: 0,
+                        y: 0,
+                        globalAngle: 0,
+                        
+                        // Leaf properties
+                        hasLeaf: i > 2 && i < numSegments - 1 && Math.random() < CONFIG.leafChance,
+                        leafSide: (i % 2 === 0) ? 1 : -1, // Alternate sides
+                        leafSize: CONFIG.leafSizeMin + Math.random() * (CONFIG.leafSizeMax - CONFIG.leafSizeMin),
+                        leafAngleOffset: 0.5 + Math.random() * 0.3 // Angle relative to the stem
+                    });
+                }
+            }
+
+            update() {
+                let prevX = this.x;
+                let prevY = this.y;
+                let prevAngle = 0;
+
+                for (let i = 0; i < this.segments.length; i++) {
+                    let seg = this.segments[i];
+
+                    // 1. Natural sway (breeze)
+                    let sway = Math.sin(time * CONFIG.swaySpeed * seg.swaySpeedMult + seg.swayPhase) * CONFIG.swayAmount;
+
+                    // 2. Mouse Repulsion
+                    let dx = mouse.x - prevX;
+                    let dy = mouse.y - prevY;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+
+                    seg.targetBend = 0;
+                    if (dist < CONFIG.mouseRadius && dist > 0) {
+                        // Determine which way to bend based on mouse position relative to stem direction
+                        let crossProduct = Math.cos(seg.globalAngle || this.baseAngle) * dy - Math.sin(seg.globalAngle || this.baseAngle) * dx;
+                        let direction = crossProduct > 0 ? -1 : 1;
+                        
+                        // Smooth falloff based on distance
+                        let force = Math.pow((CONFIG.mouseRadius - dist) / CONFIG.mouseRadius, 2);
+                        seg.targetBend = direction * force * CONFIG.mouseForce;
+                    }
+
+                    // Smoothly transition current bend towards target bend
+                    seg.bend += (seg.targetBend - seg.bend) * CONFIG.bendSmoothing;
+
+                    // 3. Hierarchical Angle Calculation
+                    // The angle of this segment is relative to the previous segment's angle.
+                    // This ensures the whole vine moves organically when the base moves.
+                    let currentRelAngle = seg.relAngle + sway + seg.bend;
+                    
+                    if (i === 0) {
+                        seg.globalAngle = currentRelAngle;
+                    } else {
+                        seg.globalAngle = prevAngle + currentRelAngle;
+                    }
+
+                    // 4. Calculate final position
+                    seg.x = prevX + Math.cos(seg.globalAngle) * this.segmentLength;
+                    seg.y = prevY + Math.sin(seg.globalAngle) * this.segmentLength;
+
+                    prevX = seg.x;
+                    prevY = seg.y;
+                    prevAngle = seg.globalAngle;
+                }
+            }
+
+            draw() {
+                ctx.strokeStyle = `rgba(${CONFIG.vineColor}, ${this.opacity})`;
+                ctx.fillStyle = `rgba(${CONFIG.vineColor}, ${this.opacity + 0.15})`;
+                ctx.lineWidth = CONFIG.lineWidth;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+
+                // Draw Stem
+                ctx.beginPath();
+                ctx.moveTo(this.x, this.y);
+                
+                let pts = [{x: this.x, y: this.y}, ...this.segments];
+                for (let i = 1; i < pts.length - 1; i++) {
+                    let xc = (pts[i].x + pts[i+1].x) / 2;
+                    let yc = (pts[i].y + pts[i+1].y) / 2;
+                    ctx.quadraticCurveTo(pts[i].x, pts[i].y, xc, yc);
+                }
+                // Connect to the very tip
+                let last = pts[pts.length - 1];
+                ctx.lineTo(last.x, last.y);
+                ctx.stroke();
+
+                // Draw Leaves
+                for (let i = 0; i < this.segments.length; i++) {
+                    let seg = this.segments[i];
+                    if (seg.hasLeaf) {
+                        ctx.save();
+                        ctx.translate(seg.x, seg.y);
+                        
+                        // Leaf points slightly forward along the stem
+                        let leafAngle = seg.globalAngle + (seg.leafAngleOffset * seg.leafSide);
+                        ctx.rotate(leafAngle);
+                        
+                        ctx.beginPath();
+                        ctx.moveTo(0, 0);
+                        // Organic curved leaf shape
+                        ctx.quadraticCurveTo(seg.leafSize * 0.5, seg.leafSize * 0.35, seg.leafSize, 0);
+                        ctx.quadraticCurveTo(seg.leafSize * 0.5, -seg.leafSize * 0.35, 0, 0);
+                        ctx.fill();
+                        
+                        ctx.restore();
+                    }
+                }
+            }
+        }
+
+        function init() {
+            resize();
+            window.addEventListener('resize', resize);
+            requestAnimationFrame(animate);
+        }
+
+        function resize() {
+            // Support high DPI / Retina displays for crisp rendering
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            ctx.scale(dpr, dpr);
+            
+            createVines();
+        }
+
+        function createVines() {
+            vines = [];
+            const isMobile = window.innerWidth < 768;
+            const count = isMobile ? CONFIG.mobileVineCount : CONFIG.desktopVineCount;
+            
+            // Limit maximum length so the center of the screen remains mostly clear
+            const maxAllowedReach = Math.min(window.innerWidth, window.innerHeight) * 0.45;
+
+            for (let i = 0; i < count; i++) {
+                // Pick a random edge: 0=Top, 1=Right, 2=Bottom, 3=Left
+                let edge = Math.floor(Math.random() * 4);
+                let x, y, angle;
+                
+                // Allow vines to start slightly off-screen for a continuous feel
+                let offset = 20; 
+
+                if (edge === 0) { // Top
+                    x = Math.random() * window.innerWidth;
+                    y = -offset;
+                    angle = Math.PI / 2 + (Math.random() - 0.5) * (Math.PI * 0.6);
+                } else if (edge === 1) { // Right
+                    x = window.innerWidth + offset;
+                    y = Math.random() * window.innerHeight;
+                    angle = Math.PI + (Math.random() - 0.5) * (Math.PI * 0.6);
+                } else if (edge === 2) { // Bottom
+                    x = Math.random() * window.innerWidth;
+                    y = window.innerHeight + offset;
+                    angle = -Math.PI / 2 + (Math.random() - 0.5) * (Math.PI * 0.6);
+                } else { // Left
+                    x = -offset;
+                    y = Math.random() * window.innerHeight;
+                    angle = 0 + (Math.random() - 0.5) * (Math.PI * 0.6);
+                }
+
+                // Randomize reach for each vine so they aren't uniform
+                let reach = maxAllowedReach * (0.4 + Math.random() * 0.6);
+                
+                vines.push(new Vine(x, y, angle, reach));
+            }
+        }
+
+        function animate(timestamp) {
+            time = timestamp;
+            ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+
+            vines.forEach(vine => {
+                vine.update();
+                vine.draw();
+            });
+
+            requestAnimationFrame(animate);
+        }
+
+        // Boot up the canvas
+        init();
+
+    </script>
+</body>
+</html>

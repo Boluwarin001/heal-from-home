@@ -1,0 +1,1292 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Verdantica Apothecary • Living Botanical Background</title>
+  
+  <!-- Tailwind CSS via CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- Google Fonts: Cormorant Garamond (Editorial Serif) & Plus Jakarta Sans (Clean Modern Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            sans: ['"Plus Jakarta Sans"', 'system-ui', 'sans-serif'],
+          },
+          colors: {
+            forest: {
+              950: '#020a06',
+              900: '#05160e',
+              850: '#082216',
+              800: '#0d2d1f',
+              700: '#14422e',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Custom subtle scrollbar & botanical styling */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #05160e;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1a4230;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #285e46;
+    }
+    
+    /* Background subtle deep vignette */
+    body {
+      background: radial-gradient(circle at 50% 38%, #0d2e20 0%, #071b12 50%, #030a07 100%);
+      background-attachment: fixed;
+    }
+
+    /* Ambient glow for cards */
+    .botanical-card {
+      background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(240, 248, 245, 0.08);
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .botanical-card:hover {
+      border-color: rgba(240, 248, 245, 0.22);
+      transform: translateY(-2px);
+      box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.5), 0 0 25px -5px rgba(180, 230, 205, 0.08);
+    }
+  </style>
+</head>
+
+<body class="min-h-full font-sans text-neutral-200 selection:bg-emerald-900 selection:text-white relative overflow-x-hidden">
+
+  <!-- ================================================================= -->
+  <!-- BACKGROUND CANVAS (Fixed behind content, pointer-events: none)    -->
+  <!-- ================================================================= -->
+  <canvas 
+    id="botanical-canvas" 
+    class="fixed inset-0 w-full h-full pointer-events-none z-0"
+    aria-hidden="true">
+  </canvas>
+
+  <!-- ================================================================= -->
+  <!-- WEBSITE CONTENT (Completely interactive above canvas)              -->
+  <!-- ================================================================= -->
+  <div class="relative z-10 flex flex-col min-h-screen">
+    
+    <!-- Top Announcement Bar -->
+    <div class="border-b border-white/5 bg-forest-950/40 backdrop-blur-sm py-2 px-4 text-center text-xs tracking-widest uppercase text-emerald-300/80 font-medium">
+      <span>✦ Wildcrafted Spring Harvest • Rare Forest Adaptogens & Whole-Plant Elixirs ✦</span>
+    </div>
+
+    <!-- Navigation -->
+    <header class="w-full max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
+      <a href="#" class="group flex items-center gap-3">
+        <svg class="w-7 h-7 text-emerald-300/80 group-hover:text-emerald-200 transition-colors" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M12 22C12 22 12 13 12 8C12 3 7 2 7 2C7 2 7 7 7 12C7 17 12 22 12 22Z" stroke-linejoin="round"/>
+          <path d="M12 14C14.5 12 18 11.5 19 8C16 7 13.5 10 12 14Z" stroke-linejoin="round"/>
+          <path d="M12 17C10 15.5 7 15 6 12C9 11.5 11 13.5 12 17Z" stroke-linejoin="round"/>
+        </svg>
+        <div class="flex flex-col">
+          <span class="font-serif text-2xl tracking-[0.2em] text-white uppercase font-light">Verdantica</span>
+          <span class="text-[9px] tracking-[0.3em] uppercase text-emerald-400/60 font-medium -mt-1">Botanical Apothecary</span>
+        </div>
+      </a>
+
+      <!-- Menu links -->
+      <nav class="hidden md:flex items-center gap-8 text-sm tracking-widest text-neutral-300/80 uppercase font-light">
+        <a href="#apothecary" class="hover:text-white transition-colors">Apothecary</a>
+        <a href="#philosophy" class="hover:text-white transition-colors">Philosophy</a>
+        <a href="#herbarium" class="hover:text-white transition-colors">Herbarium Index</a>
+        <a href="#journal" class="hover:text-white transition-colors">Journal</a>
+      </nav>
+
+      <!-- Action Button -->
+      <div class="flex items-center gap-4">
+        <button class="text-xs uppercase tracking-widest px-5 py-2.5 rounded-full border border-white/20 text-neutral-200 hover:border-white/50 hover:bg-white/5 transition-all duration-300 backdrop-blur-sm">
+          Consult Herbalist
+        </button>
+      </div>
+    </header>
+
+    <!-- Hero Section (Center of screen remains clear and highly legible) -->
+    <main class="flex-grow flex flex-col justify-center items-center text-center px-6 py-20 max-w-4xl mx-auto">
+      
+      <!-- Organic Emblem -->
+      <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full border border-emerald-400/20 bg-emerald-950/30 text-emerald-300 text-xs tracking-widest uppercase mb-8 backdrop-blur-md">
+        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+        Circadian Extraction Method
+      </div>
+
+      <!-- Main Heading -->
+      <h1 class="font-serif text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white font-normal leading-[1.08] tracking-tight mb-6">
+        The Living Spirit <br />
+        <span class="italic font-light text-emerald-100/90 font-serif">of Wild Flora</span>
+      </h1>
+
+      <!-- Subtitle -->
+      <p class="text-neutral-300/80 text-base sm:text-lg max-w-2xl font-light leading-relaxed mb-10">
+        Cold-macerated whole plant essences, wildcrafted adaptogens, and artisanal tinctures hand-gathered in deep reverence to ancient botanical cycles.
+      </p>
+
+      <!-- Primary Calls to Action -->
+      <div class="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+        <a href="#apothecary" class="w-full sm:w-auto px-8 py-4 rounded-full bg-neutral-100 text-forest-950 font-medium text-xs uppercase tracking-[0.2em] hover:bg-white hover:shadow-lg hover:shadow-emerald-950/50 transition-all duration-300">
+          Explore Formulations
+        </a>
+        <a href="#method" class="w-full sm:w-auto px-8 py-4 rounded-full border border-neutral-400/30 text-neutral-200 text-xs uppercase tracking-[0.2em] hover:border-neutral-200 hover:bg-white/5 transition-all duration-300 backdrop-blur-sm">
+          The Craft of Maceration
+        </a>
+      </div>
+
+      <!-- Botanical Standards Strip -->
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 mt-16 pt-12 border-t border-white/10 w-full text-center">
+        <div>
+          <div class="font-serif text-2xl text-emerald-200">100% Biodynamic</div>
+          <div class="text-[11px] uppercase tracking-widest text-neutral-400 mt-1">Ethically Foraged</div>
+        </div>
+        <div>
+          <div class="font-serif text-2xl text-emerald-200">40 Lunar Days</div>
+          <div class="text-[11px] uppercase tracking-widest text-neutral-400 mt-1">Slow Sun Maceration</div>
+        </div>
+        <div class="col-span-2 sm:col-span-1">
+          <div class="font-serif text-2xl text-emerald-200">Zero Synthetics</div>
+          <div class="text-[11px] uppercase tracking-widest text-neutral-400 mt-1">Pure Plant Medicine</div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Feature Showcase Cards (Frosted Glass revealing animated vines behind) -->
+    <section class="max-w-7xl mx-auto px-6 py-12 w-full">
+      <div class="text-center mb-10">
+        <span class="text-xs uppercase tracking-[0.25em] text-emerald-400/70 font-medium">Seasonal Offerings</span>
+        <h2 class="font-serif text-3xl sm:text-4xl text-white mt-1">Curated Herbal Tinctures</h2>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Card 1 -->
+        <article class="botanical-card rounded-2xl p-7 flex flex-col justify-between group">
+          <div>
+            <div class="flex justify-between items-start text-xs text-neutral-400 uppercase tracking-widest mb-3">
+              <span>N° 01 • Sedative</span>
+              <span>50 ml / 1.7 oz</span>
+            </div>
+            <h3 class="font-serif text-2xl text-white group-hover:text-emerald-200 transition-colors">Artemisia & Elder</h3>
+            <p class="text-sm text-neutral-300/70 font-light mt-3 leading-relaxed">
+              Infused with silver mugwort, sweet woodruff, and spring elderflower to invite restful, dream-rich sleep and quiet the nervous system.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
+            <span class="text-xs uppercase tracking-wider text-emerald-300 font-medium">Night Restoration</span>
+            <span class="text-neutral-400 group-hover:translate-x-1 transition-transform">→</span>
+          </div>
+        </article>
+
+        <!-- Card 2 -->
+        <article class="botanical-card rounded-2xl p-7 flex flex-col justify-between group">
+          <div>
+            <div class="flex justify-between items-start text-xs text-neutral-400 uppercase tracking-widest mb-3">
+              <span>N° 02 • Adaptogen</span>
+              <span>50 ml / 1.7 oz</span>
+            </div>
+            <h3 class="font-serif text-2xl text-white group-hover:text-emerald-200 transition-colors">Golden Rhodiola</h3>
+            <p class="text-sm text-neutral-300/70 font-light mt-3 leading-relaxed">
+              High-latitude subarctic rhodiola root combined with holy basil and pine pollen to elevate mental acuity, endurance, and calm vitality.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
+            <span class="text-xs uppercase tracking-wider text-emerald-300 font-medium">Circadian Clarity</span>
+            <span class="text-neutral-400 group-hover:translate-x-1 transition-transform">→</span>
+          </div>
+        </article>
+
+        <!-- Card 3 -->
+        <article class="botanical-card rounded-2xl p-7 flex flex-col justify-between group">
+          <div>
+            <div class="flex justify-between items-start text-xs text-neutral-400 uppercase tracking-widest mb-3">
+              <span>N° 03 • Grounding</span>
+              <span>100 ml / 3.4 oz</span>
+            </div>
+            <h3 class="font-serif text-2xl text-white group-hover:text-emerald-200 transition-colors">Centella & Vetiver</h3>
+            <p class="text-sm text-neutral-300/70 font-light mt-3 leading-relaxed">
+              Deeply nourishing forest leaf tonic macerated in biodynamic jojoba with wild vetiver roots to anchor inner balance and restore cellular moisture.
+            </p>
+          </div>
+          <div class="mt-6 pt-4 border-t border-white/5 flex items-center justify-between">
+            <span class="text-xs uppercase tracking-wider text-emerald-300 font-medium">Earth Resonance</span>
+            <span class="text-neutral-400 group-hover:translate-x-1 transition-transform">→</span>
+          </div>
+        </article>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-white/5 py-8 px-6 text-center text-xs tracking-widest uppercase text-neutral-400/60">
+      <p>© Verdantica Botanica • Formulated with organic whole plants • Move cursor near screen borders to interact with vines</p>
+    </footer>
+
+  </div>
+
+  <!-- ================================================================= -->
+  <!-- FLOATING LIVE TUNING DRAWER (Convenient for adjusting parameters)  -->
+  <!-- ================================================================= -->
+  <aside 
+    id="tuning-panel"
+    class="fixed bottom-5 right-5 z-20 bg-forest-950/85 backdrop-blur-xl border border-white/10 rounded-2xl p-4 w-72 text-xs text-neutral-300 shadow-2xl transition-all duration-300"
+    style="display: none;"
+    aria-label="Background Parameters">
+    <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-3">
+      <span class="font-serif text-base text-white">Botanical Controls</span>
+      <button id="close-controls-btn" class="text-neutral-400 hover:text-white text-base">✕</button>
+    </div>
+    
+    <div class="space-y-3">
+      <div>
+        <div class="flex justify-between text-[11px] mb-1">
+          <span>Breeze Sway:</span>
+          <span id="val-sway" class="text-emerald-300 font-mono">22px</span>
+        </div>
+        <input id="ctrl-sway" type="range" min="5" max="45" value="22" class="w-full accent-emerald-400">
+      </div>
+
+      <div>
+        <div class="flex justify-between text-[11px] mb-1">
+          <span>Mouse Repulsion Force:</span>
+          <span id="val-force" class="text-emerald-300 font-mono">28</span>
+        </div>
+        <input id="ctrl-force" type="range" min="5" max="60" value="28" class="w-full accent-emerald-400">
+      </div>
+
+      <div>
+        <div class="flex justify-between text-[11px] mb-1">
+          <span>Mouse Proximity Radius:</span>
+          <span id="val-radius" class="text-emerald-300 font-mono">160px</span>
+        </div>
+        <input id="ctrl-radius" type="range" min="80" max="300" value="160" class="w-full accent-emerald-400">
+      </div>
+
+      <div>
+        <div class="flex justify-between text-[11px] mb-1">
+          <span>Leaf Size Scale:</span>
+          <span id="val-leaf" class="text-emerald-300 font-mono">1.0x</span>
+        </div>
+        <input id="ctrl-leaf" type="range" min="0.5" max="1.8" step="0.1" value="1.0" class="w-full accent-emerald-400">
+      </div>
+
+      <div class="pt-2 border-t border-white/10 flex gap-2">
+        <button id="btn-reset-config" class="w-full py-1.5 rounded-lg border border-white/15 hover:bg-white/5 text-[10px] uppercase tracking-wider text-neutral-300 transition-colors">
+          Reset Defaults
+        </button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Toggle Controls Pill -->
+  <button 
+    id="open-controls-btn"
+    class="fixed bottom-5 right-5 z-20 px-3.5 py-2 rounded-full bg-forest-900/80 hover:bg-forest-800 border border-white/15 backdrop-blur-md text-[11px] uppercase tracking-wider text-emerald-200/90 shadow-xl flex items-center gap-2 transition-all duration-300 hover:scale-105"
+    title="Tune vine physics & aesthetics">
+    <svg class="w-3.5 h-3.5 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M12 20a8 8 0 1 0 0-16 8 8 0 0 0 0 16Z"/>
+      <path d="M12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4Z"/>
+      <path d="M12 2v2M12 20v2M20 12h2M2 12h2"/>
+    </svg>
+    <span>Tune Vines</span>
+  </button>
+
+  <!-- ================================================================= -->
+  <!-- VANILLA JAVASCRIPT: ORGANIC VINE & LEAF SIMULATION SYSTEM         -->
+  <!-- ================================================================= -->
+  <script>
+    (function () {
+      "use strict";
+
+      /* ===============================================================
+       * 1. CONFIGURATION
+       * Easily modify these values to adjust appearance and behavior
+       * =============================================================== */
+      const CONFIG = {
+        // --- Stem Aesthetics ---
+        stemColor: "rgba(242, 248, 244, 0.72)",       // Delicate light ivory/off-white
+        stemGlowColor: "rgba(255, 255, 255, 0.15)",   // Soft ethereal glow
+        stemWidthBase: 2.2,                           // Base thickness at vine root (px)
+        stemWidthTip: 0.65,                           // Tapered thickness at vine tip (px)
+        
+        // --- Leaf Aesthetics ---
+        leafColor: "rgba(246, 252, 249, 0.65)",       // Translucent off-white
+        leafColorHover: "rgba(255, 255, 255, 0.95)",  // Subtle luminous brighten near cursor
+        leafVeinColor: "rgba(180, 220, 205, 0.45)",   // Fine botanical midrib vein color
+        leafSizeMin: 7,                               // Leaf length near tip (px)
+        leafSizeMax: 18,                              // Leaf length near base/middle (px)
+        leafSizeMultiplier: 1.0,                      // Global scale modifier (controlled by UI)
+        leafSpacing: 2,                               // Segment interval between leaves
+        
+        // --- Natural Breeze Sway ---
+        breezeSpeed: 0.0016,                          // Speed of continuous organic breeze
+        swayAmplitude: 22,                            // Maximum ambient swaying distance at tips (px)
+        leafFlutterSpeed: 0.003,                      // Micro-flutter frequency of leaves
+        
+        // --- Mouse Interaction ---
+        mouseRadius: 160,                             // Cursor interaction repulsion radius (px)
+        mouseRepelForce: 28,                          // Peak repulsion displacement force
+        springStiffness: 0.045,                       // Speed of gentle recovery back to rest position
+        damping: 0.88,                                // Organic movement damping (0.84 - 0.92 is natural)
+        
+        // --- Atmosphere & Ambience ---
+        enableMotes: true,                            // Delicate drifting botanical pollen/spores
+        moteCount: 26,                                // Quantity of background ambient motes
+        moteColor: "rgba(235, 248, 240, 0.22)"
+      };
+
+      // Backup of default config for resetting
+      const DEFAULT_CONFIG = Object.assign({}, CONFIG);
+
+      /* ===============================================================
+       * 2. CANVAS & CONTEXT SETUP
+       * Handles crisp Retina / HiDPI rendering and responsive resize
+       * =============================================================== */
+      const canvas = document.getElementById("botanical-canvas");
+      const ctx = canvas.getContext("2d");
+
+      let width = 0;
+      let height = 0;
+      let dpr = 1;
+
+      // Mouse state tracker
+      const mouse = {
+        x: -9999,
+        y: -9999,
+        prevX: -9999,
+        prevY: -9999,
+        vx: 0,
+        vy: 0,
+        active: false,
+        lastActiveTime: 0
+      };
+
+      /* ===============================================================
+       * 3. DATA STRUCTURES: VINES, BRANCHES, LEAVES & MOTES
+       * =============================================================== */
+      let vines = [];
+      let motes = [];
+
+      /**
+       * Seedable pseudo-random helper for consistent organic curvature
+       */
+      function pseudoRandom(seed) {
+        const x = Math.sin(seed++) * 10000;
+        return x - Math.floor(x);
+      }
+
+      /**
+       * Creates a single continuous vine chain
+       */
+      function createVine(definition, globalSeed) {
+        const {
+          startX, startY,
+          baseAngle,
+          totalLength,
+          segments = 24,
+          curlDirection = 1,
+          curvature = 0.045,
+          hasBranch = false
+        } = definition;
+
+        const nodes = [];
+        const segLength = totalLength / segments;
+        
+        let currentAngle = baseAngle;
+        let currX = startX;
+        let currY = startY;
+
+        // Construct resting chain of nodes
+        for (let i = 0; i < segments; i++) {
+          nodes.push({
+            restX: currX,
+            restY: currY,
+            x: currX,
+            y: currY,
+            vx: 0,
+            vy: 0,
+            restAngle: currentAngle,
+            lengthToNext: segLength
+          });
+
+          // Gentle natural curvature curling inward, then softly meandering
+          const progress = i / segments;
+          const curveInfluence = Math.sin(progress * Math.PI) * curvature * curlDirection;
+          const subtleWave = Math.sin(globalSeed + i * 0.38) * 0.025;
+          
+          currentAngle += curveInfluence + subtleWave;
+          currX += Math.cos(currentAngle) * segLength;
+          currY += Math.sin(currentAngle) * segLength;
+        }
+
+        // Attach leaves naturally along the stem
+        const leaves = [];
+        for (let i = 2; i < segments - 2; i += CONFIG.leafSpacing) {
+          const progress = i / segments;
+          // Leaf size starts moderate, peaks around 35-40% length, then tapers elegantly
+          const bellCurve = Math.sin(progress * Math.PI * 0.85);
+          const leafLen = CONFIG.leafSizeMin + (CONFIG.leafSizeMax - CONFIG.leafSizeMin) * bellCurve;
+          const side = (leaves.length % 2 === 0) ? 1 : -1;
+
+          leaves.push({
+            nodeIndex: i,
+            side: side,
+            baseLength: leafLen,
+            baseWidth: leafLen * 0.44,
+            angleOffset: (Math.PI / 3.8) * side, // ~47° forward inclination
+            swayPhase: globalSeed + i * 0.6,
+            petioleLen: 2.5 // Tiny connecting stalk
+          });
+        }
+
+        // Optional secondary branch/shoot splitting off at node ~9
+        let branch = null;
+        if (hasBranch && segments > 14) {
+          const branchRootIdx = Math.floor(segments * 0.4);
+          const rootNode = nodes[branchRootIdx];
+          const branchSegments = 12;
+          const branchLen = totalLength * 0.42;
+          const branchSegLen = branchLen / branchSegments;
+          const branchNodes = [];
+          
+          let bAngle = rootNode.restAngle + (curlDirection * -0.65);
+          let bx = rootNode.restX;
+          let by = rootNode.restY;
+
+          for (let j = 0; j < branchSegments; j++) {
+            branchNodes.push({
+              relX: bx - rootNode.restX,
+              relY: by - rootNode.restY,
+              x: bx,
+              y: by,
+              vx: 0,
+              vy: 0,
+              restAngle: bAngle,
+              lengthToNext: branchSegLen
+            });
+            bAngle += (Math.sin(j * 0.4 + globalSeed) * 0.04) + (curlDirection * -0.035);
+            bx += Math.cos(bAngle) * branchSegLen;
+            by += Math.sin(bAngle) * branchSegLen;
+          }
+
+          const branchLeaves = [];
+          for (let j = 2; j < branchSegments - 1; j += 2) {
+            const bProgress = j / branchSegments;
+            const bLeafLen = (CONFIG.leafSizeMin * 0.9) + (CONFIG.leafSizeMax * 0.55 - CONFIG.leafSizeMin) * (1 - bProgress * 0.5);
+            const bSide = (branchLeaves.length % 2 === 0) ? 1 : -1;
+            branchLeaves.push({
+              nodeIndex: j,
+              side: bSide,
+              baseLength: bLeafLen,
+              baseWidth: bLeafLen * 0.44,
+              angleOffset: (Math.PI / 3.6) * bSide,
+              swayPhase: globalSeed * 1.5 + j * 0.7,
+              petioleLen: 2.0
+            });
+          }
+
+          branch = {
+            parentIndex: branchRootIdx,
+            nodes: branchNodes,
+            leaves: branchLeaves
+          };
+        }
+
+        return {
+          nodes: nodes,
+          leaves: leaves,
+          branch: branch,
+          seed: globalSeed,
+          curlDirection: curlDirection,
+          totalLength: totalLength
+        };
+      }
+
+      /* ===============================================================
+       * 4. RESPONSIVE VINE GENERATOR (Frames edges & clears center)
+       * =============================================================== */
+      function initializeVines() {
+        vines = [];
+        const isMobile = width < 640;
+        const isTablet = width >= 640 && width < 1024;
+        const minDim = Math.min(width, height);
+
+        // Vine length is scaled to screen proportions so center remains clear
+        const longReach = minDim * (isMobile ? 0.48 : 0.44);
+        const medReach = minDim * (isMobile ? 0.38 : 0.35);
+        const shortReach = minDim * (isMobile ? 0.28 : 0.27);
+
+        // Strategic peripheral placement recipes
+        const vineSpecs = [
+          // --- TOP-LEFT CORNER & UPPER EDGE ---
+          {
+            startX: -15,
+            startY: height * 0.06,
+            baseAngle: 0.65, // pointing down-right
+            totalLength: longReach * 1.05,
+            segments: 26,
+            curlDirection: 1,
+            curvature: 0.042,
+            hasBranch: true
+          },
+          {
+            startX: width * 0.16,
+            startY: -15,
+            baseAngle: 1.15, // cascading downwards
+            totalLength: medReach,
+            segments: 22,
+            curlDirection: -1,
+            curvature: 0.038,
+            hasBranch: !isMobile
+          },
+          {
+            startX: -10,
+            startY: height * 0.26,
+            baseAngle: 0.35, // reaching inwards
+            totalLength: shortReach * 1.1,
+            segments: 20,
+            curlDirection: 1,
+            curvature: 0.048,
+            hasBranch: false
+          },
+
+          // --- TOP-RIGHT CORNER & UPPER EDGE ---
+          {
+            startX: width + 15,
+            startY: height * 0.05,
+            baseAngle: 2.50, // pointing down-left
+            totalLength: longReach * 1.02,
+            segments: 26,
+            curlDirection: -1,
+            curvature: 0.042,
+            hasBranch: true
+          },
+          {
+            startX: width * 0.84,
+            startY: -15,
+            baseAngle: 1.95, // cascading down-left
+            totalLength: medReach,
+            segments: 22,
+            curlDirection: 1,
+            curvature: 0.04,
+            hasBranch: !isMobile
+          },
+          {
+            startX: width + 12,
+            startY: height * 0.24,
+            baseAngle: 2.80, // arching inward
+            totalLength: shortReach * 1.15,
+            segments: 20,
+            curlDirection: -1,
+            curvature: 0.046,
+            hasBranch: false
+          },
+
+          // --- BOTTOM-LEFT CORNER & LOWER EDGE ---
+          {
+            startX: -15,
+            startY: height * 0.92,
+            baseAngle: -0.65, // reaching up-right
+            totalLength: longReach * 1.08,
+            segments: 26,
+            curlDirection: -1,
+            curvature: 0.042,
+            hasBranch: true
+          },
+          {
+            startX: width * 0.18,
+            startY: height + 15,
+            baseAngle: -1.25, // climbing up-right
+            totalLength: medReach,
+            segments: 22,
+            curlDirection: 1,
+            curvature: 0.036,
+            hasBranch: !isMobile
+          },
+          {
+            startX: -12,
+            startY: height * 0.68,
+            baseAngle: -0.32, // reaching upward & inward
+            totalLength: shortReach * 1.1,
+            segments: 20,
+            curlDirection: -1,
+            curvature: 0.045,
+            hasBranch: false
+          },
+
+          // --- BOTTOM-RIGHT CORNER & LOWER EDGE ---
+          {
+            startX: width + 15,
+            startY: height * 0.94,
+            baseAngle: -2.48, // reaching up-left
+            totalLength: longReach * 1.06,
+            segments: 26,
+            curlDirection: 1,
+            curvature: 0.042,
+            hasBranch: true
+          },
+          {
+            startX: width * 0.82,
+            startY: height + 15,
+            baseAngle: -1.90, // climbing up-left
+            totalLength: medReach,
+            segments: 22,
+            curlDirection: -1,
+            curvature: 0.038,
+            hasBranch: !isMobile
+          },
+          {
+            startX: width + 12,
+            startY: height * 0.72,
+            baseAngle: -2.85, // arching upward & inward
+            totalLength: shortReach * 1.1,
+            segments: 20,
+            curlDirection: 1,
+            curvature: 0.045,
+            hasBranch: false
+          },
+
+          // --- OCCASIONAL SIDE VINES (DESKTOP / TABLET ONLY) ---
+          ...((isMobile) ? [] : [
+            {
+              startX: -15,
+              startY: height * 0.48,
+              baseAngle: 0.12,
+              totalLength: medReach * 0.95,
+              segments: 22,
+              curlDirection: 1,
+              curvature: 0.038,
+              hasBranch: false
+            },
+            {
+              startX: width + 15,
+              startY: height * 0.46,
+              baseAngle: 3.02,
+              totalLength: medReach * 0.95,
+              segments: 22,
+              curlDirection: -1,
+              curvature: 0.038,
+              hasBranch: false
+            }
+          ])
+        ];
+
+        // Generate each vine with unique organic seed
+        for (let i = 0; i < vineSpecs.length; i++) {
+          const vineSeed = 42.19 + i * 17.382;
+          vines.push(createVine(vineSpecs[i], vineSeed));
+        }
+
+        // Initialize delicate background motes
+        motes = [];
+        if (CONFIG.enableMotes) {
+          const count = isMobile ? Math.floor(CONFIG.moteCount * 0.5) : CONFIG.moteCount;
+          for (let m = 0; m < count; m++) {
+            motes.push({
+              x: Math.random() * width,
+              y: Math.random() * height,
+              radius: 0.7 + Math.random() * 1.6,
+              alpha: 0.1 + Math.random() * 0.22,
+              speedY: -0.15 - Math.random() * 0.25,
+              swayFreq: 0.001 + Math.random() * 0.002,
+              phase: Math.random() * Math.PI * 2
+            });
+          }
+        }
+      }
+
+      /* ===============================================================
+       * 5. PHYSICS & KINEMATICS UPDATE ENGINE
+       * Connected chain spring physics + traveling breeze wave + mouse flow
+       * =============================================================== */
+      function updatePhysics(time) {
+        // Calculate mouse speed for fluid wake effect
+        if (mouse.active) {
+          mouse.vx = mouse.x - mouse.prevX;
+          mouse.vy = mouse.y - mouse.prevY;
+          mouse.prevX = mouse.x;
+          mouse.prevY = mouse.y;
+        } else {
+          mouse.vx *= 0.8;
+          mouse.vy *= 0.8;
+        }
+
+        // If no interaction for 1.5s, gently fade active influence
+        if (Date.now() - mouse.lastActiveTime > 1500) {
+          mouse.active = false;
+        }
+
+        // Update each main vine
+        for (let v = 0; v < vines.length; v++) {
+          const vine = vines[v];
+          const nodes = vine.nodes;
+          const N = nodes.length;
+
+          // Node 0 is rooted firmly outside/at screen edge
+          // Update internal nodes (i = 1 to N-1)
+          for (let i = 1; i < N; i++) {
+            const node = nodes[i];
+            const u = i / (N - 1); // Progression along vine (0 = root, 1 = tip)
+
+            // --- 1. Ambient Breeze Sway ---
+            // Harmonic wave traveling down the vine
+            const swayT = time * CONFIG.breezeSpeed;
+            const primaryWave = Math.sin(swayT + vine.seed + i * 0.22);
+            const secondaryWave = Math.cos(swayT * 1.7 + vine.seed * 2 + i * 0.35) * 0.35;
+            const combinedWave = primaryWave + secondaryWave;
+            
+            // Amplitude grows smoothly from 0 at root to max at tip
+            const amp = Math.pow(u, 1.45) * CONFIG.swayAmplitude;
+            
+            // Displacement perpendicular to the resting stem angle
+            const normalX = -Math.sin(node.restAngle);
+            const normalY = Math.cos(node.restAngle);
+            
+            const targetX = node.restX + normalX * (combinedWave * amp);
+            const targetY = node.restY + normalY * (combinedWave * amp);
+
+            // --- 2. Organic Mouse Repulsion & Flow ---
+            let pushX = 0;
+            let pushY = 0;
+
+            if (mouse.active) {
+              const dx = node.x - mouse.x;
+              const dy = node.y - mouse.y;
+              const dist = Math.hypot(dx, dy);
+
+              if (dist < CONFIG.mouseRadius && dist > 0.001) {
+                // Smooth quadratic falloff: 1 at cursor center, 0 at outer radius
+                const factor = Math.pow(1 - dist / CONFIG.mouseRadius, 2);
+                const repel = factor * CONFIG.mouseRepelForce;
+
+                // Push gently away from mouse
+                pushX = (dx / dist) * repel;
+                pushY = (dy / dist) * repel;
+
+                // Subtle fluid wake: moving cursor drags air slightly
+                pushX += mouse.vx * factor * 0.18;
+                pushY += mouse.vy * factor * 0.18;
+              }
+            }
+
+            // --- 3. Spring-Damper System ---
+            // Pull toward resting+sway target plus mouse repulsion
+            const ax = (targetX - node.x) * CONFIG.springStiffness + pushX * 0.09;
+            const ay = (targetY - node.y) * CONFIG.springStiffness + pushY * 0.09;
+
+            node.vx = (node.vx + ax) * CONFIG.damping;
+            node.vy = (node.vy + ay) * CONFIG.damping;
+
+            node.x += node.vx;
+            node.y += node.vy;
+          }
+
+          // --- 4. Kinematic Chain Relaxation (Ensures stem stays ONE connected botanical body) ---
+          for (let pass = 0; pass < 2; pass++) {
+            for (let i = 1; i < N; i++) {
+              const pA = nodes[i - 1];
+              const pB = nodes[i];
+              const dx = pB.x - pA.x;
+              const dy = pB.y - pA.y;
+              const currentDist = Math.hypot(dx, dy);
+              const targetDist = pA.lengthToNext;
+
+              if (currentDist > 0.0001) {
+                const diff = (currentDist - targetDist) / currentDist;
+                // Move current node back towards its natural distance
+                const relaxFactor = 0.45;
+                pB.x -= dx * diff * relaxFactor;
+                pB.y -= dy * diff * relaxFactor;
+              }
+            }
+          }
+
+          // --- 5. Update Secondary Branch (if present) ---
+          if (vine.branch) {
+            const b = vine.branch;
+            const parent = nodes[b.parentIndex];
+            const bNodes = b.nodes;
+            const bN = bNodes.length;
+
+            // Anchor branch root to parent node
+            bNodes[0].x = parent.x;
+            bNodes[0].y = parent.y;
+
+            for (let j = 1; j < bN; j++) {
+              const bNode = bNodes[j];
+              const bu = j / (bN - 1);
+              
+              const bSway = Math.sin(time * CONFIG.breezeSpeed * 1.2 + vine.seed * 3 + j * 0.28) * (bu * CONFIG.swayAmplitude * 0.65);
+              const bNormalX = -Math.sin(bNode.restAngle);
+              const bNormalY = Math.cos(bNode.restAngle);
+
+              const bTargetX = parent.x + bNode.relX + bNormalX * bSway;
+              const bTargetY = parent.y + bNode.relY + bNormalY * bSway;
+
+              let bPushX = 0;
+              let bPushY = 0;
+              if (mouse.active) {
+                const bdx = bNode.x - mouse.x;
+                const bdy = bNode.y - mouse.y;
+                const bDist = Math.hypot(bdx, bdy);
+                if (bDist < CONFIG.mouseRadius && bDist > 0.001) {
+                  const bFactor = Math.pow(1 - bDist / CONFIG.mouseRadius, 2);
+                  bPushX = (bdx / bDist) * (bFactor * CONFIG.mouseRepelForce * 0.85);
+                  bPushY = (bdy / bDist) * (bFactor * CONFIG.mouseRepelForce * 0.85);
+                }
+              }
+
+              const bax = (bTargetX - bNode.x) * CONFIG.springStiffness + bPushX * 0.09;
+              const bay = (bTargetY - bNode.y) * CONFIG.springStiffness + bPushY * 0.09;
+              bNode.vx = (bNode.vx + bax) * CONFIG.damping;
+              bNode.vy = (bNode.vy + bay) * CONFIG.damping;
+              bNode.x += bNode.vx;
+              bNode.y += bNode.vy;
+
+              // Constrain branch segment length
+              const prevB = bNodes[j - 1];
+              const cdx = bNode.x - prevB.x;
+              const cdy = bNode.y - prevB.y;
+              const cDist = Math.hypot(cdx, cdy);
+              if (cDist > 0.0001) {
+                const bDiff = (cDist - prevB.lengthToNext) / cDist;
+                bNode.x -= cdx * bDiff * 0.5;
+                bNode.y -= cdy * bDiff * 0.5;
+              }
+            }
+          }
+        }
+
+        // --- 6. Update Background Ambient Motes ---
+        for (let m = 0; m < motes.length; m++) {
+          const mote = motes[m];
+          mote.y += mote.speedY;
+          mote.x += Math.sin(time * mote.swayFreq + mote.phase) * 0.25;
+
+          // Wrap around seamlessly
+          if (mote.y < -10) {
+            mote.y = height + 10;
+            mote.x = Math.random() * width;
+          }
+        }
+      }
+
+      /* ===============================================================
+       * 6. RENDERING: STEMS, LEAVES & BOTANICAL DETAILS
+       * =============================================================== */
+
+      /**
+       * Draws an authentic botanical leaf with organic Bézier curvature,
+       * a central vein (midrib), and soft translucent coloring.
+       */
+      function drawBotanicalLeaf(x, y, angle, length, width, proximityRatio) {
+        ctx.save();
+        ctx.translate(x, y);
+        ctx.rotate(angle);
+
+        // Dynamic luminance: leaves subtly brighten when cursor is nearby
+        const alpha = 0.62 + (proximityRatio * 0.32);
+        
+        // Leaf blade contour
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        // Upper convex curve with slight organic asymmetry
+        ctx.bezierCurveTo(length * 0.32, -width * 0.85, length * 0.75, -width * 0.65, length, 0);
+        // Lower convex curve
+        ctx.bezierCurveTo(length * 0.75, width * 0.65, length * 0.32, width * 0.85, 0, 0);
+        ctx.closePath();
+
+        // Fill with soft ivory translucent white
+        ctx.fillStyle = `rgba(244, 250, 246, ${alpha})`;
+        ctx.fill();
+
+        // Delicate leaf outline
+        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha * 0.85})`;
+        ctx.lineWidth = 0.6;
+        ctx.stroke();
+
+        // Central vein (midrib)
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.quadraticCurveTo(length * 0.5, -width * 0.05, length * 0.9, 0);
+        ctx.strokeStyle = CONFIG.leafVeinColor;
+        ctx.lineWidth = 0.5;
+        ctx.stroke();
+
+        // Subtle lateral secondary veins on larger leaves
+        if (length > 12) {
+          ctx.beginPath();
+          // First pair
+          ctx.moveTo(length * 0.3, 0);
+          ctx.lineTo(length * 0.5, -width * 0.35);
+          ctx.moveTo(length * 0.3, 0);
+          ctx.lineTo(length * 0.5, width * 0.35);
+          // Second pair
+          ctx.moveTo(length * 0.55, 0);
+          ctx.lineTo(length * 0.72, -width * 0.28);
+          ctx.moveTo(length * 0.55, 0);
+          ctx.lineTo(length * 0.72, width * 0.28);
+          
+          ctx.strokeStyle = "rgba(200, 230, 215, 0.25)";
+          ctx.lineWidth = 0.4;
+          ctx.stroke();
+        }
+
+        ctx.restore();
+      }
+
+      /**
+       * Draws a vine stem with tapering thickness and smooth midpoint curves
+       */
+      function drawVineStem(nodes, isBranch = false) {
+        const N = nodes.length;
+        if (N < 2) return;
+
+        const baseWidth = isBranch ? CONFIG.stemWidthBase * 0.7 : CONFIG.stemWidthBase;
+        const tipWidth = isBranch ? CONFIG.stemWidthTip * 0.7 : CONFIG.stemWidthTip;
+
+        // Render segment-by-segment with smooth quadratic midpoint curves to taper thickness
+        for (let i = 0; i < N - 1; i++) {
+          const p0 = (i === 0) ? nodes[0] : {
+            x: (nodes[i - 1].x + nodes[i].x) / 2,
+            y: (nodes[i - 1].y + nodes[i].y) / 2
+          };
+          const p1 = nodes[i];
+          const p2 = {
+            x: (nodes[i].x + nodes[i + 1].x) / 2,
+            y: (nodes[i].y + nodes[i + 1].y) / 2
+          };
+
+          const u = i / (N - 1);
+          const currentWidth = baseWidth - (baseWidth - tipWidth) * Math.pow(u, 0.75);
+
+          ctx.beginPath();
+          ctx.moveTo(p0.x, p0.y);
+          ctx.quadraticCurveTo(p1.x, p1.y, p2.x, p2.y);
+          
+          ctx.strokeStyle = CONFIG.stemColor;
+          ctx.lineWidth = currentWidth;
+          ctx.lineCap = "round";
+          ctx.lineJoin = "round";
+          ctx.stroke();
+        }
+
+        // Final segment connecting to tip
+        const lastMid = {
+          x: (nodes[N - 2].x + nodes[N - 1].x) / 2,
+          y: (nodes[N - 2].y + nodes[N - 1].y) / 2
+        };
+        ctx.beginPath();
+        ctx.moveTo(lastMid.x, lastMid.y);
+        ctx.lineTo(nodes[N - 1].x, nodes[N - 1].y);
+        ctx.strokeStyle = CONFIG.stemColor;
+        ctx.lineWidth = tipWidth;
+        ctx.stroke();
+
+        // Tip tendril curl (delicate botanical fiddlehead flourish)
+        const tipNode = nodes[N - 1];
+        const prevTipNode = nodes[N - 2];
+        const tipAngle = Math.atan2(tipNode.y - prevTipNode.y, tipNode.x - prevTipNode.x);
+
+        ctx.save();
+        ctx.translate(tipNode.x, tipNode.y);
+        ctx.rotate(tipAngle);
+        ctx.beginPath();
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(4, -3, 8, -5, 10, -2);
+        ctx.bezierCurveTo(11.5, 0, 10.5, 2.5, 9, 2);
+        ctx.strokeStyle = CONFIG.stemColor;
+        ctx.lineWidth = tipWidth * 0.75;
+        ctx.stroke();
+        ctx.restore();
+      }
+
+      /**
+       * Main render cycle
+       */
+      function render(time) {
+        // Clear entire viewport
+        ctx.clearRect(0, 0, width, height);
+
+        // Soft botanical ambient glow
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = CONFIG.stemGlowColor;
+
+        // Render subtle background motes
+        if (CONFIG.enableMotes) {
+          for (let m = 0; m < motes.length; m++) {
+            const mote = motes[m];
+            ctx.beginPath();
+            ctx.arc(mote.x, mote.y, mote.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(230, 245, 238, ${mote.alpha})`;
+            ctx.fill();
+          }
+        }
+
+        // Render each vine and its attached leaves
+        for (let v = 0; v < vines.length; v++) {
+          const vine = vines[v];
+          const nodes = vine.nodes;
+
+          // 1. Draw Stem
+          drawVineStem(nodes, false);
+
+          // 2. Draw Branch Stem (if present)
+          if (vine.branch) {
+            drawVineStem(vine.branch.nodes, true);
+          }
+
+          // 3. Draw Leaves on Main Stem
+          for (let l = 0; l < vine.leaves.length; l++) {
+            const leaf = vine.leaves[l];
+            const node = nodes[leaf.nodeIndex];
+            const nextNode = nodes[Math.min(leaf.nodeIndex + 1, nodes.length - 1)];
+            const prevNode = nodes[Math.max(leaf.nodeIndex - 1, 0)];
+
+            // Tangent along stem
+            const stemTangent = Math.atan2(nextNode.y - prevNode.y, nextNode.x - prevNode.x);
+            
+            // Subtle breeze flutter
+            const flutter = Math.sin(time * CONFIG.leafFlutterSpeed + leaf.swayPhase) * 0.08;
+            const finalAngle = stemTangent + leaf.angleOffset + flutter;
+
+            // Compute mouse proximity for interactive leaf luminescence
+            let proximityRatio = 0;
+            if (mouse.active) {
+              const d = Math.hypot(node.x - mouse.x, node.y - mouse.y);
+              if (d < CONFIG.mouseRadius) {
+                proximityRatio = Math.pow(1 - d / CONFIG.mouseRadius, 1.5);
+              }
+            }
+
+            const currentLength = leaf.baseLength * CONFIG.leafSizeMultiplier;
+            const currentWidth = leaf.baseWidth * CONFIG.leafSizeMultiplier;
+
+            // Draw petiole connecting stalk
+            const petioleX = node.x + Math.cos(finalAngle) * leaf.petioleLen;
+            const petioleY = node.y + Math.sin(finalAngle) * leaf.petioleLen;
+
+            ctx.beginPath();
+            ctx.moveTo(node.x, node.y);
+            ctx.lineTo(petioleX, petioleY);
+            ctx.strokeStyle = CONFIG.stemColor;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+
+            // Draw leaf blade
+            drawBotanicalLeaf(petioleX, petioleY, finalAngle, currentLength, currentWidth, proximityRatio);
+          }
+
+          // 4. Draw Leaves on Branch
+          if (vine.branch) {
+            const b = vine.branch;
+            for (let bl = 0; bl < b.leaves.length; bl++) {
+              const bLeaf = b.leaves[bl];
+              const bNode = b.nodes[bLeaf.nodeIndex];
+              const bNextNode = b.nodes[Math.min(bLeaf.nodeIndex + 1, b.nodes.length - 1)];
+              const bPrevNode = b.nodes[Math.max(bLeaf.nodeIndex - 1, 0)];
+
+              const bStemTangent = Math.atan2(bNextNode.y - bPrevNode.y, bNextNode.x - bPrevNode.x);
+              const bFlutter = Math.sin(time * CONFIG.leafFlutterSpeed + bLeaf.swayPhase) * 0.08;
+              const bFinalAngle = bStemTangent + bLeaf.angleOffset + bFlutter;
+
+              let bProximity = 0;
+              if (mouse.active) {
+                const bd = Math.hypot(bNode.x - mouse.x, bNode.y - mouse.y);
+                if (bd < CONFIG.mouseRadius) {
+                  bProximity = Math.pow(1 - bd / CONFIG.mouseRadius, 1.5);
+                }
+              }
+
+              const bLength = bLeaf.baseLength * CONFIG.leafSizeMultiplier;
+              const bWidth = bLeaf.baseWidth * CONFIG.leafSizeMultiplier;
+
+              const bPetioleX = bNode.x + Math.cos(bFinalAngle) * bLeaf.petioleLen;
+              const bPetioleY = bNode.y + Math.sin(bFinalAngle) * bLeaf.petioleLen;
+
+              ctx.beginPath();
+              ctx.moveTo(bNode.x, bNode.y);
+              ctx.lineTo(bPetioleX, bPetioleY);
+              ctx.strokeStyle = CONFIG.stemColor;
+              ctx.lineWidth = 0.6;
+              ctx.stroke();
+
+              drawBotanicalLeaf(bPetioleX, bPetioleY, bFinalAngle, bLength, bWidth, bProximity);
+            }
+          }
+        }
+      }
+
+      /* ===============================================================
+       * 7. RESIZING & LIFECYCLE
+       * =============================================================== */
+      function resizeCanvas() {
+        width = window.innerWidth;
+        height = window.innerHeight;
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+
+        if (ctx.resetTransform) {
+          ctx.resetTransform();
+        } else {
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+        }
+        ctx.scale(dpr, dpr);
+
+        initializeVines();
+      }
+
+      /* ===============================================================
+       * 8. POINTER & TOUCH INTERACTIONS
+       * Listens on window so interactions work seamlessly even when
+       * hovering over buttons and cards (canvas has pointer-events: none)
+       * =============================================================== */
+      function handlePointerMove(clientX, clientY) {
+        if (!mouse.active) {
+          mouse.prevX = clientX;
+          mouse.prevY = clientY;
+        }
+        mouse.x = clientX;
+        mouse.y = clientY;
+        mouse.active = true;
+        mouse.lastActiveTime = Date.now();
+      }
+
+      window.addEventListener("pointermove", function (e) {
+        handlePointerMove(e.clientX, e.clientY);
+      }, { passive: true });
+
+      window.addEventListener("pointerdown", function (e) {
+        handlePointerMove(e.clientX, e.clientY);
+      }, { passive: true });
+
+      window.addEventListener("pointerleave", function () {
+        mouse.active = false;
+      });
+
+      // Touch events fallback
+      window.addEventListener("touchmove", function (e) {
+        if (e.touches.length > 0) {
+          handlePointerMove(e.touches[0].clientX, e.touches[0].clientY);
+        }
+      }, { passive: true });
+
+      window.addEventListener("touchend", function () {
+        mouse.active = false;
+      });
+
+      // Responsive debounced resize
+      let resizeTimer = null;
+      window.addEventListener("resize", function () {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(resizeCanvas, 150);
+      });
+
+      /* ===============================================================
+       * 9. MAIN ANIMATION LOOP (requestAnimationFrame)
+       * =============================================================== */
+      let lastTime = performance.now();
+
+      function animate(now) {
+        const delta = Math.min(now - lastTime, 40); // Cap frame delta to avoid physics explosion
+        lastTime = now;
+
+        updatePhysics(now);
+        render(now);
+
+        requestAnimationFrame(animate);
+      }
+
+      // Initial startup
+      resizeCanvas();
+      requestAnimationFrame(animate);
+
+      /* ===============================================================
+       * 10. INTERACTIVE TUNING PANEL (Optional Helper)
+       * Allows real-time tweaking of breeze sway, leaf size, and repulsion
+       * =============================================================== */
+      const tuningPanel = document.getElementById("tuning-panel");
+      const openBtn = document.getElementById("open-controls-btn");
+      const closeBtn = document.getElementById("close-controls-btn");
+
+      const ctrlSway = document.getElementById("ctrl-sway");
+      const ctrlForce = document.getElementById("ctrl-force");
+      const ctrlRadius = document.getElementById("ctrl-radius");
+      const ctrlLeaf = document.getElementById("ctrl-leaf");
+      const btnReset = document.getElementById("btn-reset-config");
+
+      const valSway = document.getElementById("val-sway");
+      const valForce = document.getElementById("val-force");
+      const valRadius = document.getElementById("val-radius");
+      const valLeaf = document.getElementById("val-leaf");
+
+      openBtn.addEventListener("click", () => {
+        tuningPanel.style.display = "block";
+        openBtn.style.display = "none";
+      });
+
+      closeBtn.addEventListener("click", () => {
+        tuningPanel.style.display = "none";
+        openBtn.style.display = "flex";
+      });
+
+      ctrlSway.addEventListener("input", (e) => {
+        CONFIG.swayAmplitude = parseFloat(e.target.value);
+        valSway.textContent = `${CONFIG.swayAmplitude}px`;
+      });
+
+      ctrlForce.addEventListener("input", (e) => {
+        CONFIG.mouseRepelForce = parseFloat(e.target.value);
+        valForce.textContent = `${CONFIG.mouseRepelForce}`;
+      });
+
+      ctrlRadius.addEventListener("input", (e) => {
+        CONFIG.mouseRadius = parseFloat(e.target.value);
+        valRadius.textContent = `${CONFIG.mouseRadius}px`;
+      });
+
+      ctrlLeaf.addEventListener("input", (e) => {
+        CONFIG.leafSizeMultiplier = parseFloat(e.target.value);
+        valLeaf.textContent = `${CONFIG.leafSizeMultiplier.toFixed(1)}x`;
+      });
+
+      btnReset.addEventListener("click", () => {
+        Object.assign(CONFIG, DEFAULT_CONFIG);
+        ctrlSway.value = CONFIG.swayAmplitude;
+        ctrlForce.value = CONFIG.mouseRepelForce;
+        ctrlRadius.value = CONFIG.mouseRadius;
+        ctrlLeaf.value = CONFIG.leafSizeMultiplier;
+
+        valSway.textContent = `${CONFIG.swayAmplitude}px`;
+        valForce.textContent = `${CONFIG.mouseRepelForce}`;
+        valRadius.textContent = `${CONFIG.mouseRadius}px`;
+        valLeaf.textContent = `${CONFIG.leafSizeMultiplier.toFixed(1)}x`;
+      });
+
+    })();
+  </script>
+</body>
+</html>

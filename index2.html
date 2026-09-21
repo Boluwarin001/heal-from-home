@@ -149,35 +149,29 @@
 <!--  -->
 
 <main>
+  <section id="home" class="relative overflow-visible bg-forest pt-32 text-white min-h-[100vh]">
 
-
-
-  <section id="home" class="relative overflow-hidden bg-forest pt-22 text-white min-h-[100vh] flex items-center justify-center">
-    <!-- can we apply inside this section -->
   <!-- Background -->
   <div class="grain absolute inset-0 opacity-50"></div>
   <div class="absolute -left-32 top-32 h-72 w-72 rounded-full bg-lime/10 blur-3xl"></div>
 
-  <!-- 🌿 LIVING BOTANICAL VINE CANVAS (Positioned behind text at z-10) 🌿 -->
-  <canvas id="hero-vine-canvas" class="absolute inset-0 w-full h-full pointer-events-none z-10" aria-hidden="true"></canvas>
-
   <!-- Main hero content -->
+  <div class="relative z-10 mx-auto grid max-w-7xl items-center gap-8 px-4 pb-20 sm:px-6 lg:grid-cols-[1fr_1fr] lg:px-8 lg:pb-24">
 
-    <!-- Center content -->
-    <div class="relative max-w-[600px] flex flex-col items-center justify-center z-20 reveal">
+    <!-- Left content -->
+    <div class="relative z-20 reveal">
 
-      <div class="mb-6 inline items-center gap-2 rounded-full text-center border border-sun/30 bg-sun/10 px-4 py-2 text-sm font-bold text-sun">
-        <span class="h-2 w-2 rounded-full bg-lime backdrop-blur-md"></span>
+      <div class="mb-6 inline-flex items-center gap-2 rounded-full border border-sun/30 bg-sun/10 px-4 py-2 text-sm font-bold text-sun">
+        <span class="h-2 w-2 rounded-full bg-lime"></span>
         12-WEEK PRACTICAL PROGRAMME
       </div>
 
-
-      <h1 class="max-w-3xl text-5xl text-center font-bold leading-[.98] tracking-[-.05em] sm:text-6xl lg:text-7xl">
+      <h1 class="max-w-3xl text-5xl font-black leading-[.98] tracking-[-.05em] sm:text-6xl lg:text-7xl">
         Grow what nourishes you.<br>
         <span class="text-sun">Heal from home.</span>
       </h1>
 
-      <p class="mt-7 max-w-2xl text-lg text-center leading-8 text-white/75">
+      <p class="mt-7 max-w-2xl text-lg leading-8 text-white/75">
         Heal from Home aims to empower individuals and families with practical knowledge of herbal healing and organic food cultivation.
       </p>
 
@@ -200,19 +194,31 @@
         </div>
       </div>
 
+    </div>
 
+
+    <!-- Right logo area -->
+    <div class="relative min-h-[540px] reveal lg:min-h-[650px]">
+
+      <!-- Soft glow behind logo -->
+      <div class="absolute lg:left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-sun/10 blur-3xl"></div>
+
+      <!-- Logo -->
+      <div class="absolute inset-0 flex items-center justify-center">
+        <img src="assets/hero.png" alt="Heal From Home" class="relative z-10 w-[105%] max-w-[680px] object-contain">
+      </div>
+
+    </div>
 
   </div>
+
+  <!-- Plant -->
+  <!-- This sits outside the grid so it can overlap the logo and extend below the hero -->
+  <img src="assets/plant.png" alt="" aria-hidden="true" class="pointer-events-none absolute bottom-[0px] right-[0px] z-30 w-[300px] drop-shadow-[0_25px_35px_rgba(0,0,0,.35)] sm:right-[0px] sm:w-[500px] lg:bottom-[0] lg:right-[0px] lg:w-[450px]">
 
 
 
 </section>
-
-
-
-
-
-
 
   <section class="border-y border-forest/10 bg-sun">
     <div class="mx-auto flex max-w-7xl flex-col gap-4 px-4 py-5 text-center sm:flex-row sm:items-center sm:justify-between sm:px-6 lg:px-8 lg:text-left">
@@ -428,8 +434,6 @@
   
 </footer>
 
-<img src="assets/plant.png" style="transform: translateY(-100%);"  class="pointer-events-none absolute w-[400px] drop-shadow-[0_25px_35px_rgba(0,0,0,.35)] sm:w-[400px] lg:right-[0px] lg:w-[350px]">
-
 <script>
   const menuBtn=document.getElementById('menuBtn'),mobileMenu=document.getElementById('mobileMenu');
   menuBtn.addEventListener('click',()=>mobileMenu.classList.toggle('hidden'));
@@ -437,8 +441,5 @@
   const observer=new IntersectionObserver(entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.08});
   document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 </script>
-
-<script src="leaves.js"></script>
-
 </body>
 </html>

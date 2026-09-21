@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Botanical Vine Background</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<style>
+html,body{margin:0;width:100%;height:100%;overflow:hidden}
+canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+</style>
+</head>
+
+<body class="bg-[#123D32] text-white">
+
+<canvas id="vineCanvas"></canvas>
+
+<!-- Your website -->
+<div class="relative z-10 min-h-screen flex items-center justify-center">
+    <div class="text-center max-w-3xl px-6">
+        <p class="text-sm tracking-[0.35em] uppercase opacity-70 mb-5">Plants for a brighter tomorrow</p>
+        <h1 class="text-6xl md:text-8xl font-serif leading-[0.9]">
+            Grow something<br>
+            beautiful.
+        </h1>
+        <p class="mt-8 text-md opacity-70 max-w-xl mx-auto">
+            Discover plants, herbs and natural ways to bring a little more life
+            into every day.
+        </p>
+
+        <div class="mt-10 flex justify-center gap-4">
+            <button class="px-7 py-3 rounded-full bg-white text-[#123D32]">
+                Explore Plants
+            </button>
+            <button class="px-7 py-3 rounded-full border border-white/30">
+                Explore Herbs
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+const canvas=document.getElementById("vineCanvas");
+const ctx=canvas.getContext("2d");
+
+let W,H,dpr;
+let vines=[];
+let mouse={x:-1000,y:-1000,active:false};
+
+function resize(){
+    dpr=window.devicePixelRatio||1;
+    W=window.innerWidth;
+    H=window.innerHeight;
+    canvas.width=W*dpr;
+    canvas.height=H*dpr;
+    canvas.style.width=W+"px";
+    canvas.style.height=H+"px";
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    createVines();
+}
+
+function random(min,max){
+    return Math.random()*(max-min)+min;
+}
+
+class Vine{
+
+    constructor(x,y,length,angle,side){
+        this.x=x;
+        this.y=y;
+        this.length=length;
+        this.angle=angle;
+        this.side=side;
+        this.width=random(0.8,1.5);
+        this.speed=random(0.00035,0.00065);
+        this.phase=random(0,Math.PI*2);
+        this.curve=random(0.8,1.5);
+
+        this.segments=[];
+        this.leaves=[];
+
+        const count=Math.floor(length/10);
+
+        for(let i=0;i<=count;i++){
+
+            const t=i/count;
+
+            const wave=Math.sin(t*Math.PI*this.curve)*random(10,25);
+
+            const px=x+
+                Math.cos(angle)*length*t+
+                Math.cos(angle+Math.PI/2)*wave;
+
+            const py=y+
+                Math.sin(angle)*length*t+
+                Math.sin(angle+Math.PI/2)*wave;
+
+            this.segments.push({
+                x:px,
+                y:py,
+                baseX:px,
+                baseY:py,
+                t:t
+            });
+
+            if(i>4 && i<count-2 && i%random(5,8)<1){
+
+                this.leaves.push({
+                    index:i,
+                    side:Math.random()>0.5?1:-1,
+                    size:random(5,10),
+                    angle:random(-0.5,0.5),
+                    phase:random(0,Math.PI*2)
+                });
+            }
+        }
+    }
+
+    update(time){
+
+        for(let i=0;i<this.segments.length;i++){
+
+            const p=this.segments[i];
+
+            const sway=
+                Math.sin(time*this.speed+p.t*4+this.phase)*
+                (2+p.t*7);
+
+            p.x=p.baseX+
+                Math.cos(this.angle+Math.PI/2)*sway;
+
+            p.y=p.baseY+
+                Math.sin(this.angle+Math.PI/2)*sway;
+
+            /*
+             * Mouse interaction
+             */
+            const dx=p.x-mouse.x;
+            const dy=p.y-mouse.y;
+            const dist=Math.sqrt(dx*dx+dy*dy);
+
+            const radius=150;
+
+            if(mouse.active && dist<radius){
+
+                const force=(1-dist/radius);
+
+                p.x+=dx/dist*force*35;
+                p.y+=dy/dist*force*35;
+            }
+        }
+    }
+
+    draw(){
+
+        ctx.beginPath();
+
+        ctx.moveTo(
+            this.segments[0].x,
+            this.segments[0].y
+        );
+
+        for(let i=1;i<this.segments.length-1;i++){
+
+            const p=this.segments[i];
+            const next=this.segments[i+1];
+
+            const cx=(p.x+next.x)/2;
+            const cy=(p.y+next.y)/2;
+
+            ctx.quadraticCurveTo(
+                p.x,
+                p.y,
+                cx,
+                cy
+            );
+        }
+
+        ctx.strokeStyle="rgba(255,255,255,0.72)";
+        ctx.lineWidth=this.width;
+        ctx.stroke();
+
+        /*
+         * Leaves
+         */
+        this.leaves.forEach(leaf=>{
+
+            const p=this.segments[leaf.index];
+
+            const previous=this.segments[Math.max(0,leaf.index-2)];
+            const next=this.segments[Math.min(
+                this.segments.length-1,
+                leaf.index+2
+            )];
+
+            const direction=Math.atan2(
+                next.y-previous.y,
+                next.x-previous.x
+            );
+
+            const leafAngle=
+                direction+
+                leaf.side*Math.PI/2+
+                leaf.angle+
+                Math.sin(Date.now()*0.001+leaf.phase)*0.08;
+
+            const length=leaf.size*1.8;
+            const width=leaf.size;
+
+            /*
+             * Small stem connecting leaf to vine
+             */
+            ctx.beginPath();
+            ctx.moveTo(p.x,p.y);
+            ctx.lineTo(
+                p.x+Math.cos(leafAngle)*length*0.35,
+                p.y+Math.sin(leafAngle)*length*0.35
+            );
+
+            ctx.strokeStyle="rgba(255,255,255,0.55)";
+            ctx.lineWidth=0.7;
+            ctx.stroke();
+
+            /*
+             * Leaf shape
+             */
+            const lx=
+                p.x+
+                Math.cos(leafAngle)*length;
+
+            const ly=
+                p.y+
+                Math.sin(leafAngle)*length;
+
+            ctx.save();
+
+            ctx.translate(lx,ly);
+            ctx.rotate(leafAngle);
+
+            ctx.beginPath();
+
+            ctx.moveTo(0,0);
+
+            ctx.bezierCurveTo(
+                -width,
+                -width*0.65,
+                -width*1.05,
+                width*0.65,
+                0,
+                width
+            );
+
+            ctx.bezierCurveTo(
+                width*1.05,
+                width*0.65,
+                width,
+                -width*0.65,
+                0,
+                0
+            );
+
+            ctx.fillStyle="rgba(255,255,255,0.9)";
+            ctx.fill();
+
+            /*
+             * Leaf vein
+             */
+            ctx.beginPath();
+            ctx.moveTo(0,0);
+            ctx.lineTo(0,width*0.8);
+
+            ctx.strokeStyle="rgba(18,61,50,0.3)";
+            ctx.lineWidth=0.5;
+            ctx.stroke();
+
+            ctx.restore();
+        });
+    }
+}
+
+function createVines(){
+
+    vines=[];
+
+    const positions=[
+        [-20,80,260,-0.2],
+        [W*0.18,-30,300,1.1],
+        [W*0.48,-50,220,1.5],
+        [W*0.82,-40,320,2.0],
+        [W+20,100,300,2.8],
+        [-30,H*0.55,260,-0.4],
+        [W+30,H*0.58,280,3.5],
+        [W*0.15,H+30,300,-1.0],
+        [W*0.75,H+40,330,-2.1]
+    ];
+
+    positions.forEach(v=>{
+        vines.push(
+            new Vine(
+                v[0],
+                v[1],
+                v[2],
+                v[3],
+                1
+            )
+        );
+    });
+}
+
+function animate(time){
+
+    ctx.clearRect(0,0,W,H);
+
+    vines.forEach(vine=>{
+        vine.update(time);
+        vine.draw();
+    });
+
+    requestAnimationFrame(animate);
+}
+
+window.addEventListener("resize",resize);
+
+window.addEventListener("mousemove",e=>{
+    mouse.x=e.clientX;
+    mouse.y=e.clientY;
+    mouse.active=true;
+});
+
+window.addEventListener("mouseleave",()=>{
+    mouse.active=false;
+});
+
+resize();
+requestAnimationFrame(animate);
+</script>
+
+</body>
+</html>
